@@ -8,10 +8,10 @@ class DownloadDocumentController extends Controller
 {
     public function downloadAction($document_slug)
     {
-	    return $this->render(
-	        'ChmDocumentBundle:DownloadDocument:download.html.twig',
-	        array('document_slug' => $document_slug)
-	    );
+        return $this->render(
+            'ChmDocumentBundle:DownloadDocument:download.html.twig',
+            array('document_slug' => $document_slug)
+        );
     }
 
 }

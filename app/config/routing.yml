@@ -20,4 +20,3 @@ fos_user_change_password:
 chm_document:
     resource: "@ChmDocumentBundle/Resources/config/routing.yml"
     prefix:   /
-

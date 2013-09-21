@@ -48,7 +48,7 @@ Chm\Bundle\DocumentBundle\Entity\Document:
             column: notify_failure
     manyToOne:
         user:
-            targetEntity: FosUser
+            targetEntity: User
             cascade: {  }
             mappedBy: null
             inversedBy: null
