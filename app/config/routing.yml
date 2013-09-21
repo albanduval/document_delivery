@@ -17,7 +17,7 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
- chm_document:
+chm_document:
     resource: "@ChmDocumentBundle/Resources/config/routing.yml"
     prefix:   /
 
