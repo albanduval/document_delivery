@@ -1,0 +1,37 @@
+Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction:
+    type: entity
+    table: download_count_restriction
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        limit:
+            type: integer
+            unsigned: false
+            nullable: true
+        failureCount:
+            type: boolean
+            nullable: true
+            column: failure_count
+        successCount:
+            type: boolean
+            nullable: true
+            column: success_count
+        comment:
+            type: text
+            nullable: true
+    manyToOne:
+        document:
+            targetEntity: Document
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                document_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

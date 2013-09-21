@@ -1,0 +1,36 @@
+Chm\Bundle\DocumentBundle\Entity\IpRestriction:
+    type: entity
+    table: ip_restriction
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        ipAddress:
+            type: string
+            length: 45
+            fixed: false
+            nullable: true
+            column: ip_address
+        netmask:
+            type: string
+            length: 45
+            fixed: false
+            nullable: true
+        comment:
+            type: text
+            nullable: true
+    manyToOne:
+        document:
+            targetEntity: Document
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                document_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

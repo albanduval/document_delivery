@@ -1,0 +1,52 @@
+Chm\Bundle\DocumentBundle\Entity\Delivery:
+    type: entity
+    table: delivery
+    fields:
+        id:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        sourceIp:
+            type: string
+            length: 45
+            fixed: false
+            nullable: true
+            column: source_ip
+        createdAt:
+            type: datetime
+            nullable: true
+            column: created_at
+        userAgent:
+            type: text
+            nullable: true
+            column: user_agent
+        success:
+            type: boolean
+            nullable: true
+        failureMessage:
+            type: text
+            nullable: true
+            column: failure_message
+    manyToOne:
+        document:
+            targetEntity: Document
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                document_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: FosUser
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
