@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}ChmDocumentBundle:DocumentUpload:edit{% endblock %}
+
+{% block body %}
+<h1>Welcome to the DocumentUpload:edit page</h1>
+<form action="{{ path('chm_document_save') }}" method="post" {{ form_enctype(form) }}>
+	{{ form_widget(form) }}
+  	<input type="submit" />
+</form>
+{% endblock %}
