@@ -1,14 +1,12 @@
 Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction:
     type: entity
     table: download_count_restriction
-    fields:
+    id:
         id:
-            id: true
             type: integer
-            unsigned: false
-            nullable: false
             generator:
-                strategy: IDENTITY
+                strategy: AUTO
+    fields:
         limit:
             type: integer
             unsigned: false

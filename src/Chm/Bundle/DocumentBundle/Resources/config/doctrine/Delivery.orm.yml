@@ -1,14 +1,12 @@
 Chm\Bundle\DocumentBundle\Entity\Delivery:
     type: entity
     table: delivery
-    fields:
+    id:
         id:
-            id: true
             type: integer
-            unsigned: false
-            nullable: false
             generator:
-                strategy: IDENTITY
+                strategy: AUTO
+    fields:
         sourceIp:
             type: string
             length: 45

@@ -8,7 +8,9 @@ namespace Chm\Bundle\DocumentBundle\Entity;
 class SecretRestriction
 {
     /**
-     * @var string
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -104,5 +106,18 @@ class SecretRestriction
     public function getDocument()
     {
         return $this->document;
+    }
+
+    /**
+     * Set id
+     *
+     * @param  integer           $id
+     * @return SecretRestriction
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 }

@@ -1,14 +1,12 @@
 Chm\Bundle\DocumentBundle\Entity\IpRestriction:
     type: entity
     table: ip_restriction
-    fields:
+    id:
         id:
-            id: true
             type: integer
-            unsigned: false
-            nullable: false
             generator:
-                strategy: IDENTITY
+                strategy: AUTO
+    fields:
         ipAddress:
             type: string
             length: 45

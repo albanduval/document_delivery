@@ -161,4 +161,17 @@ class DownloadCountRestriction
     {
         return $this->document;
     }
+
+    /**
+     * Set id
+     *
+     * @param  integer                  $id
+     * @return DownloadCountRestriction
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

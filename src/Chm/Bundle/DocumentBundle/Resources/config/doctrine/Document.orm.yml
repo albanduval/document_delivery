@@ -1,20 +1,18 @@
 Chm\Bundle\DocumentBundle\Entity\Document:
     type: entity
     table: document
-    fields:
+    id:
         id:
-            id: true
             type: integer
-            unsigned: false
-            nullable: false
             generator:
-                strategy: IDENTITY
-        adminName:
+                strategy: AUTO
+    fields:
+        slug:
             type: string
             length: 255
             fixed: false
             nullable: true
-            column: admin_name
+            column: slug
         niceName:
             type: string
             length: 255

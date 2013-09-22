@@ -105,4 +105,17 @@ class UserRestriction
     {
         return $this->user;
     }
+
+    /**
+     * Set id
+     *
+     * @param  integer         $id
+     * @return UserRestriction
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

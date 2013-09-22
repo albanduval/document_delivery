@@ -133,4 +133,17 @@ class IpRestriction
     {
         return $this->document;
     }
+
+    /**
+     * Set id
+     *
+     * @param  integer       $id
+     * @return IpRestriction
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

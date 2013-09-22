@@ -217,4 +217,17 @@ class Delivery
     {
         return $this->user;
     }
+
+    /**
+     * Set id
+     *
+     * @param  integer  $id
+     * @return Delivery
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 }

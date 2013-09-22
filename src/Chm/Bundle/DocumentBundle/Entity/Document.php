@@ -15,7 +15,7 @@ class Document
     /**
      * @var string
      */
-    private $adminName;
+    private $slug;
 
     /**
      * @var string
@@ -63,26 +63,26 @@ class Document
     }
 
     /**
-     * Set adminName
+     * Set slug
      *
-     * @param  string   $adminName
+     * @param  string   $slug
      * @return Document
      */
-    public function setAdminName($adminName)
+    public function setSlug($slug)
     {
-        $this->adminName = $adminName;
+        $this->slug = $slug;
 
         return $this;
     }
 
     /**
-     * Get adminName
+     * Get slug
      *
      * @return string
      */
-    public function getAdminName()
+    public function getSlug()
     {
-        return $this->adminName;
+        return $this->slug;
     }
 
     /**
@@ -244,5 +244,18 @@ class Document
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set id
+     *
+     * @param  integer  $id
+     * @return Document
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 }

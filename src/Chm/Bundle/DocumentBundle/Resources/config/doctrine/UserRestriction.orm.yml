@@ -1,14 +1,12 @@
 Chm\Bundle\DocumentBundle\Entity\UserRestriction:
     type: entity
     table: user_restriction
-    fields:
+    id:
         id:
-            id: true
             type: integer
-            unsigned: false
-            nullable: false
             generator:
-                strategy: IDENTITY
+                strategy: AUTO
+    fields:
         comment:
             type: text
             nullable: true
