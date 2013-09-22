@@ -18,11 +18,6 @@ class Delivery
     private $sourceIp;
 
     /**
-     * @var \DateTime
-     */
-    private $createdAt;
-
-    /**
      * @var string
      */
     private $userAgent;
@@ -43,9 +38,24 @@ class Delivery
     private $document;
 
     /**
-     * @var \Chm\Bundle\DocumentBundle\Entity\User
+     * @var \DateTime
      */
-    private $user;
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdBy;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedBy;
 
     /**
      * Get id
@@ -193,29 +203,6 @@ class Delivery
     public function getDocument()
     {
         return $this->document;
-    }
-
-    /**
-     * Set user
-     *
-     * @param  \Chm\Bundle\DocumentBundle\Entity\User $user
-     * @return Delivery
-     */
-    public function setUser(\Chm\Bundle\DocumentBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Chm\Bundle\DocumentBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 
     /**

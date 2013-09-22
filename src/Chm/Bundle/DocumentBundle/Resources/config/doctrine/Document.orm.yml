@@ -19,41 +19,68 @@ Chm\Bundle\DocumentBundle\Entity\Document:
             fixed: false
             nullable: true
             column: nice_name
+        filepath:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+            column: filepath
         filetype:
             type: string
             length: 10
             fixed: false
             nullable: true
-        createdAt:
-            type: datetime
-            nullable: true
-            column: created_at
         validTo:
             type: datetime
             nullable: true
             column: valid_to
         notifySuccess:
-            type: string
-            length: 45
-            fixed: false
+            type: boolean
             nullable: true
             column: notify_success
         notifyFailure:
-            type: string
-            length: 45
-            fixed: false
+            type: boolean
             nullable: true
             column: notify_failure
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            type: datetime
+            nullable: false
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
     manyToOne:
-        user:
+        createdBy:
             targetEntity: User
             cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
-                user_id:
+                created_by:
                     referencedColumnName: id
             orphanRemoval: false
+            gedmo:
+                blameable:
+                    on: create
+        updatedBy:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                updated_by:
+                    referencedColumnName: id
+            orphanRemoval: false
+            gedmo:
+                blameable:
+                    on: create
     oneToMany:
         ip_restrictions:
             targetEntity: IpRestriction

@@ -30,11 +30,6 @@ class Document
     /**
      * @var \DateTime
      */
-    private $createdAt;
-
-    /**
-     * @var \DateTime
-     */
     private $validTo;
 
     /**
@@ -48,9 +43,24 @@ class Document
     private $notifyFailure;
 
     /**
-     * @var \Chm\Bundle\DocumentBundle\Entity\User
+     * @var \DateTime
      */
-    private $user;
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdBy;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedBy;
 
     /**
      * Get id
@@ -224,29 +234,6 @@ class Document
     }
 
     /**
-     * Set user
-     *
-     * @param  \Chm\Bundle\DocumentBundle\Entity\User $user
-     * @return Document
-     */
-    public function setUser(\Chm\Bundle\DocumentBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Chm\Bundle\DocumentBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Set id
      *
      * @param  integer  $id
@@ -313,5 +300,33 @@ class Document
     public function getIpRestrictions()
     {
         return $this->ip_restrictions;
+    }
+    /**
+     * @var string
+     */
+    private $filepath;
+
+
+    /**
+     * Set filepath
+     *
+     * @param string $filepath
+     * @return Document
+     */
+    public function setFilepath($filepath)
+    {
+        $this->filepath = $filepath;
+    
+        return $this;
+    }
+
+    /**
+     * Get filepath
+     *
+     * @return string 
+     */
+    public function getFilepath()
+    {
+        return $this->filepath;
     }
 }

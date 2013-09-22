@@ -13,10 +13,6 @@ Chm\Bundle\DocumentBundle\Entity\Delivery:
             fixed: false
             nullable: true
             column: source_ip
-        createdAt:
-            type: datetime
-            nullable: true
-            column: created_at
         userAgent:
             type: text
             nullable: true
@@ -28,6 +24,20 @@ Chm\Bundle\DocumentBundle\Entity\Delivery:
             type: text
             nullable: true
             column: failure_message
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            type: datetime
+            nullable: false
+            column: updated_at
+            gedmo:
+                timestampable:
+                    on: update
     manyToOne:
         document:
             targetEntity: Document
@@ -38,13 +48,28 @@ Chm\Bundle\DocumentBundle\Entity\Delivery:
                 document_id:
                     referencedColumnName: id
             orphanRemoval: false
-        user:
+        createdBy:
             targetEntity: User
             cascade: {  }
             mappedBy: null
             inversedBy: null
             joinColumns:
-                user_id:
+                created_by:
                     referencedColumnName: id
             orphanRemoval: false
+            gedmo:
+                blameable:
+                    on: create
+        updatedBy:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                updated_by:
+                    referencedColumnName: id
+            orphanRemoval: false
+            gedmo:
+                blameable:
+                    on: create
     lifecycleCallbacks: {  }

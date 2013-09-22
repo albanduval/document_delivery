@@ -25,8 +25,7 @@ class DownloadDocumentController extends Controller
         try{
             $document->checkRestrictions();
 
-            $file = 'path/to/file.txt';
-            $response = new BinaryFileResponse($file);
+            $response = new BinaryFileResponse($document->getSystemFilePath());
 
             $response->headers->set('Content-Type', 'text/plain');
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'filename.txt');

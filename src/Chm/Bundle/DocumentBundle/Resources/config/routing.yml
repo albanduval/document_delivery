@@ -1,3 +1,13 @@
 chm_document_download:
     pattern: /download/{document_slug}
     defaults: { _controller: ChmDocumentBundle:DownloadDocument:download }
+
+chm_document_create:
+    pattern: /create
+    defaults: { _controller: ChmDocumentBundle:DocumentUpload:edit, id: null }
+chm_document_edit:
+    pattern: /edit/{id}
+    defaults: { _controller: ChmDocumentBundle:DocumentUpload:edit }
+chm_document_save:
+    pattern: /save
+    defaults: { _controller: ChmDocumentBundle:DocumentUpload:save }
