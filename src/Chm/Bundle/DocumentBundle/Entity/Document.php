@@ -258,4 +258,60 @@ class Document
 
         return $this;
     }
+
+    /**
+     */
+    public function checkRestrictions()
+    {
+        foreach($this->getIpRestrictions() as $restriction)
+        {
+            $restriction->check();
+        }
+    }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $ip_restrictions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ip_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add ip_restrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions
+     * @return Document
+     */
+    public function addIpRestriction(\Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions)
+    {
+        $this->ip_restrictions[] = $ipRestrictions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ip_restrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions
+     */
+    public function removeIpRestriction(\Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions)
+    {
+        $this->ip_restrictions->removeElement($ipRestrictions);
+    }
+
+    /**
+     * Get ip_restrictions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIpRestrictions()
+    {
+        return $this->ip_restrictions;
+    }
 }

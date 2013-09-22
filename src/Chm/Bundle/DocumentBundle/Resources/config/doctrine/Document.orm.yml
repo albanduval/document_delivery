@@ -54,4 +54,8 @@ Chm\Bundle\DocumentBundle\Entity\Document:
                 user_id:
                     referencedColumnName: id
             orphanRemoval: false
+    oneToMany:
+        ip_restrictions:
+            targetEntity: IpRestriction
+            mappedBy: document
     lifecycleCallbacks: {  }
