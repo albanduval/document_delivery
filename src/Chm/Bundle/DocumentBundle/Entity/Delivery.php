@@ -217,4 +217,73 @@ class Delivery
 
         return $this;
     }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Delivery
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\User $createdBy
+     * @return Delivery
+     */
+    public function setCreatedBy(\Chm\Bundle\DocumentBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \Chm\Bundle\DocumentBundle\Entity\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * Set updatedBy
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\User $updatedBy
+     * @return Delivery
+     */
+    public function setUpdatedBy(\Chm\Bundle\DocumentBundle\Entity\User $updatedBy = null)
+    {
+        $this->updatedBy = $updatedBy;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedBy
+     *
+     * @return \Chm\Bundle\DocumentBundle\Entity\User 
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updatedBy;
+    }
 }

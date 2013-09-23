@@ -29,10 +29,14 @@ class DocumentUploadController extends Controller
      */
     public function editAction($id)
     {
-        $repository = $this
-                        ->getDoctrine()
-                        ->getRepository('ChmDocumentBundle:Document');
-        $document = $repository->find($id);
+        if($id === 0) {
+            $document = new Document();
+        } else {
+            $repository = $this
+                            ->getDoctrine()
+                            ->getRepository('ChmDocumentBundle:Document');
+            $document = $repository->find($id);
+        }
 
         $form   = $this->createForm(new DocumentType(), $document);
  

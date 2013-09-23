@@ -85,4 +85,13 @@ Chm\Bundle\DocumentBundle\Entity\Document:
         ip_restrictions:
             targetEntity: IpRestriction
             mappedBy: document
+        secret_restrictions:
+            targetEntity: SecretRestriction
+            mappedBy: document
+        download_count_restrictions:
+            targetEntity: DownloadCountRestriction
+            mappedBy: document
+        user_restrictions:
+            targetEntity: UserRestriction
+            mappedBy: document
     lifecycleCallbacks: {  }

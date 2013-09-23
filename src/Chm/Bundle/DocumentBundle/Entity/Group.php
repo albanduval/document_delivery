@@ -19,4 +19,14 @@ class Group extends BaseGroup
         parent::__construct($name, $roles = array());
         // your own logic
     }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

@@ -63,6 +63,26 @@ class Document
     private $updatedBy;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $ip_restrictions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $secret_restrictions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $download_count_restrictions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $user_restrictions;
+
+    /**
      * Get id
      *
      * @return integer
@@ -254,6 +274,18 @@ class Document
         {
             $restriction->check();
         }
+        foreach($this->getUserRestrictions() as $restriction)
+        {
+            $restriction->check();
+        }
+        foreach($this->getSecretRestrictions() as $restriction)
+        {
+            $restriction->check();
+        }
+        foreach($this->getDownloadCountRestrictions() as $restriction)
+        {
+            $restriction->check();
+        }
     }
 
     /**
@@ -265,11 +297,6 @@ class Document
     {
         return rand(0,100) > 50;
     }
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $ip_restrictions;
 
     /**
      * Constructor
@@ -338,5 +365,174 @@ class Document
     public function getFilepath()
     {
         return $this->filepath;
+    }
+
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Document
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Add secret_restrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions
+     * @return Document
+     */
+    public function addSecretRestriction(\Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions)
+    {
+        $this->secret_restrictions[] = $secretRestrictions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove secret_restrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions
+     */
+    public function removeSecretRestriction(\Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions)
+    {
+        $this->secret_restrictions->removeElement($secretRestrictions);
+    }
+
+    /**
+     * Get secret_restrictions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSecretRestrictions()
+    {
+        return $this->secret_restrictions;
+    }
+
+    /**
+     * Add download_count_restrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions
+     * @return Document
+     */
+    public function addDownloadCountRestriction(\Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions)
+    {
+        $this->download_count_restrictions[] = $downloadCountRestrictions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove download_count_restrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions
+     */
+    public function removeDownloadCountRestriction(\Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions)
+    {
+        $this->download_count_restrictions->removeElement($downloadCountRestrictions);
+    }
+
+    /**
+     * Get download_count_restrictions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDownloadCountRestrictions()
+    {
+        return $this->download_count_restrictions;
+    }
+
+    /**
+     * Add user_restrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions
+     * @return Document
+     */
+    public function addUserRestriction(\Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions)
+    {
+        $this->user_restrictions[] = $userRestrictions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove user_restrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions
+     */
+    public function removeUserRestriction(\Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions)
+    {
+        $this->user_restrictions->removeElement($userRestrictions);
+    }
+
+    /**
+     * Get user_restrictions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUserRestrictions()
+    {
+        return $this->user_restrictions;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\User $createdBy
+     * @return Document
+     */
+    public function setCreatedBy(\Chm\Bundle\DocumentBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \Chm\Bundle\DocumentBundle\Entity\User 
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * Set updatedBy
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\User $updatedBy
+     * @return Document
+     */
+    public function setUpdatedBy(\Chm\Bundle\DocumentBundle\Entity\User $updatedBy = null)
+    {
+        $this->updatedBy = $updatedBy;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedBy
+     *
+     * @return \Chm\Bundle\DocumentBundle\Entity\User 
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updatedBy;
     }
 }

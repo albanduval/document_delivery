@@ -118,4 +118,16 @@ class UserRestriction
 
         return $this;
     }
+
+    /**
+     * Check if current user is allowed to download the file
+     *
+     *  @return boolean
+     */
+    public function check()
+    {
+        throw AccessDeniedException();
+
+        return true;
+    }
 }
