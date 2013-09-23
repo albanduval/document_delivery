@@ -257,6 +257,16 @@ class Document
     }
 
     /**
+     * returns true if document can still be downloaded
+     *
+     * @return boolean
+     */
+    public function isValid()
+    {
+        return rand(0,100) > 50;
+    }
+
+    /**
      * @var \Doctrine\Common\Collections\Collection
      */
     private $ip_restrictions;

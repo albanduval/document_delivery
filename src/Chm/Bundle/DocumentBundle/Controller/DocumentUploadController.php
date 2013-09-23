@@ -12,9 +12,27 @@ class DocumentUploadController extends Controller
     /**
      * @Template()
      */
+    public function listAction()
+    {
+        $repository = $this
+                        ->getDoctrine()
+                        ->getRepository('ChmDocumentBundle:Document');
+
+        $documents = $repository->findAll();
+        return array(
+            'documents' => $documents
+        );
+    }
+
+    /**
+     * @Template()
+     */
     public function editAction($id)
     {
-        $document = new Document();
+        $repository = $this
+                        ->getDoctrine()
+                        ->getRepository('ChmDocumentBundle:Document');
+        $document = $repository->find($id);
 
         $form   = $this->createForm(new DocumentType(), $document);
  

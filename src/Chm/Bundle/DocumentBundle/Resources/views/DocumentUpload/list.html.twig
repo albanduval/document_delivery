@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}ChmDocumentBundle:DocumentUpload:edit{% endblock %}
+
+{% block body %}
+<h1>Welcome to the DocumentUpload:list page</h1>
+<table>
+{% for document in documents %}
+<tr>
+	<td>{{ document.slug }}</td>
+	<td>{{ document.valid }}</td>
+	<td>
+		<a href="{{ path('chm_document_edit', {'id': document.id}) }}">Edit</a>
+	</td>
+</tr>
+{% endfor %}
+</table>
+<a href="{{ path('chm_document_create') }}">New</a>
+{% endblock %}
