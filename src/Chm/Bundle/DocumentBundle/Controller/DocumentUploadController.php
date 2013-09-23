@@ -19,6 +19,7 @@ class DocumentUploadController extends Controller
                         ->getRepository('ChmDocumentBundle:Document');
 
         $documents = $repository->findAll();
+
         return array(
             'documents' => $documents
         );
@@ -29,7 +30,7 @@ class DocumentUploadController extends Controller
      */
     public function editAction($id)
     {
-        if($id === 0) {
+        if ($id === 0) {
             $document = new Document();
         } else {
             $repository = $this
@@ -39,7 +40,7 @@ class DocumentUploadController extends Controller
         }
 
         $form   = $this->createForm(new DocumentType(), $document);
- 
+
         return array(
             'document' => $document,
             'form'   => $form->createView()
@@ -57,16 +58,16 @@ class DocumentUploadController extends Controller
         $request = $this->getRequest();
         $form    = $this->createForm(new DocumentType(), $document);
         $form->bind($request);
- 
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
             $em->persist($document);
             $em->flush();
- 
+
             //return $this->redirect($this->generateUrl('article_show', array('id' => $document->getId())));
-             
+
         }
- 
+
         return array(
             'document' => $document,
             'form'   => $form->createView()

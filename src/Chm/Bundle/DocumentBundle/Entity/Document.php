@@ -270,20 +270,16 @@ class Document
      */
     public function checkRestrictions()
     {
-        foreach($this->getIpRestrictions() as $restriction)
-        {
+        foreach ($this->getIpRestrictions() as $restriction) {
             $restriction->check();
         }
-        foreach($this->getUserRestrictions() as $restriction)
-        {
+        foreach ($this->getUserRestrictions() as $restriction) {
             $restriction->check();
         }
-        foreach($this->getSecretRestrictions() as $restriction)
-        {
+        foreach ($this->getSecretRestrictions() as $restriction) {
             $restriction->check();
         }
-        foreach($this->getDownloadCountRestrictions() as $restriction)
-        {
+        foreach ($this->getDownloadCountRestrictions() as $restriction) {
             $restriction->check();
         }
     }
@@ -305,17 +301,17 @@ class Document
     {
         $this->ip_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add ip_restrictions
      *
-     * @param \Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions
+     * @param  \Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions
      * @return Document
      */
     public function addIpRestriction(\Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions)
     {
         $this->ip_restrictions[] = $ipRestrictions;
-    
+
         return $this;
     }
 
@@ -332,7 +328,7 @@ class Document
     /**
      * Get ip_restrictions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIpRestrictions()
     {
@@ -343,48 +339,46 @@ class Document
      */
     private $filepath;
 
-
     /**
      * Set filepath
      *
-     * @param string $filepath
+     * @param  string   $filepath
      * @return Document
      */
     public function setFilepath($filepath)
     {
         $this->filepath = $filepath;
-    
+
         return $this;
     }
 
     /**
      * Get filepath
      *
-     * @return string 
+     * @return string
      */
     public function getFilepath()
     {
         return $this->filepath;
     }
 
-
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return Document
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -394,13 +388,13 @@ class Document
     /**
      * Add secret_restrictions
      *
-     * @param \Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions
+     * @param  \Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions
      * @return Document
      */
     public function addSecretRestriction(\Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions)
     {
         $this->secret_restrictions[] = $secretRestrictions;
-    
+
         return $this;
     }
 
@@ -417,7 +411,7 @@ class Document
     /**
      * Get secret_restrictions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSecretRestrictions()
     {
@@ -427,13 +421,13 @@ class Document
     /**
      * Add download_count_restrictions
      *
-     * @param \Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions
+     * @param  \Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions
      * @return Document
      */
     public function addDownloadCountRestriction(\Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions)
     {
         $this->download_count_restrictions[] = $downloadCountRestrictions;
-    
+
         return $this;
     }
 
@@ -450,7 +444,7 @@ class Document
     /**
      * Get download_count_restrictions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getDownloadCountRestrictions()
     {
@@ -460,13 +454,13 @@ class Document
     /**
      * Add user_restrictions
      *
-     * @param \Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions
+     * @param  \Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions
      * @return Document
      */
     public function addUserRestriction(\Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions)
     {
         $this->user_restrictions[] = $userRestrictions;
-    
+
         return $this;
     }
 
@@ -483,7 +477,7 @@ class Document
     /**
      * Get user_restrictions
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getUserRestrictions()
     {
@@ -493,20 +487,20 @@ class Document
     /**
      * Set createdBy
      *
-     * @param \Chm\Bundle\DocumentBundle\Entity\User $createdBy
+     * @param  \Chm\Bundle\DocumentBundle\Entity\User $createdBy
      * @return Document
      */
     public function setCreatedBy(\Chm\Bundle\DocumentBundle\Entity\User $createdBy = null)
     {
         $this->createdBy = $createdBy;
-    
+
         return $this;
     }
 
     /**
      * Get createdBy
      *
-     * @return \Chm\Bundle\DocumentBundle\Entity\User 
+     * @return \Chm\Bundle\DocumentBundle\Entity\User
      */
     public function getCreatedBy()
     {
@@ -516,20 +510,20 @@ class Document
     /**
      * Set updatedBy
      *
-     * @param \Chm\Bundle\DocumentBundle\Entity\User $updatedBy
+     * @param  \Chm\Bundle\DocumentBundle\Entity\User $updatedBy
      * @return Document
      */
     public function setUpdatedBy(\Chm\Bundle\DocumentBundle\Entity\User $updatedBy = null)
     {
         $this->updatedBy = $updatedBy;
-    
+
         return $this;
     }
 
     /**
      * Get updatedBy
      *
-     * @return \Chm\Bundle\DocumentBundle\Entity\User 
+     * @return \Chm\Bundle\DocumentBundle\Entity\User
      */
     public function getUpdatedBy()
     {

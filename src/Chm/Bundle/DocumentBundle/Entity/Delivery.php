@@ -221,20 +221,20 @@ class Delivery
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @param  \DateTime $updatedAt
      * @return Delivery
      */
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
-    
+
         return $this;
     }
 
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -244,20 +244,20 @@ class Delivery
     /**
      * Set createdBy
      *
-     * @param \Chm\Bundle\DocumentBundle\Entity\User $createdBy
+     * @param  \Chm\Bundle\DocumentBundle\Entity\User $createdBy
      * @return Delivery
      */
     public function setCreatedBy(\Chm\Bundle\DocumentBundle\Entity\User $createdBy = null)
     {
         $this->createdBy = $createdBy;
-    
+
         return $this;
     }
 
     /**
      * Get createdBy
      *
-     * @return \Chm\Bundle\DocumentBundle\Entity\User 
+     * @return \Chm\Bundle\DocumentBundle\Entity\User
      */
     public function getCreatedBy()
     {
@@ -267,20 +267,20 @@ class Delivery
     /**
      * Set updatedBy
      *
-     * @param \Chm\Bundle\DocumentBundle\Entity\User $updatedBy
+     * @param  \Chm\Bundle\DocumentBundle\Entity\User $updatedBy
      * @return Delivery
      */
     public function setUpdatedBy(\Chm\Bundle\DocumentBundle\Entity\User $updatedBy = null)
     {
         $this->updatedBy = $updatedBy;
-    
+
         return $this;
     }
 
     /**
      * Get updatedBy
      *
-     * @return \Chm\Bundle\DocumentBundle\Entity\User 
+     * @return \Chm\Bundle\DocumentBundle\Entity\User
      */
     public function getUpdatedBy()
     {

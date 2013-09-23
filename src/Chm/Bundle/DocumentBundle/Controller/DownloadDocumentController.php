@@ -4,10 +4,8 @@ namespace Chm\Bundle\DocumentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Chm\Bundle\DocumentBundle\Entity\Document;
 use Chm\Bundle\DocumentBundle\Entity\Delivery;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DownloadDocumentController extends Controller
@@ -18,7 +16,7 @@ class DownloadDocumentController extends Controller
     public function downloadAction($document)
     {
 
-        try{
+        try {
             $document->checkRestrictions();
 
             $response = new BinaryFileResponse($document->getFilePath(), $status = 200, $headers = array(), $public = true, $contentDisposition = 'attachment', $autoEtag = true, $autoLastModified = true);

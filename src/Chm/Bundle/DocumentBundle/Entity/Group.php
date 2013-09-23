@@ -3,7 +3,6 @@
 namespace Chm\Bundle\DocumentBundle\Entity;
 
 use FOS\UserBundle\Model\Group as BaseGroup;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  */
@@ -23,7 +22,7 @@ class Group extends BaseGroup
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
