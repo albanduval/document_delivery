@@ -1,7 +1,0 @@
-parameters:
-#    chm_document.example.class: Chm\Bundle\DocumentBundle\Example
-
-services:
-#    chm_document.example:
-#        class: %chm_document.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

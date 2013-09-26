@@ -8,9 +8,7 @@ namespace Chm\Bundle\DocumentBundle\Entity;
 class SecretRestriction
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer
      */
     private $id;
 

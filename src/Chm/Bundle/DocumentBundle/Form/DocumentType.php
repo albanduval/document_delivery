@@ -22,6 +22,26 @@ class DocumentType extends AbstractType
             ->add('validTo')
             ->add('notifySuccess')
             ->add('notifyFailure')
+            ->add('ipRestrictions', 'collection', array(
+                'type' => new IpRestrictionType(),
+                'allow_add' => true,
+                'by_reference' => false,
+                ))
+            ->add('downloadCountRestrictions', 'collection', array(
+                'type' => new DownloadCountRestrictionType(),
+                'allow_add' => true,
+                'by_reference' => false,
+                ))
+            ->add('SecretRestrictions', 'collection', array(
+                'type' => new SecretRestrictionType(),
+                'allow_add' => true,
+                'by_reference' => false,
+                ))
+            ->add('userRestrictions', 'collection', array(
+                'type' => new UserRestrictionType(),
+                'allow_add' => true,
+                'by_reference' => false,
+                ))
         ;
     }
 

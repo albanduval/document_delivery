@@ -17,37 +17,43 @@ class DownloadDocumentController extends Controller
     {
 
         try {
-            $document->checkRestrictions();
+            $restrictionsChecker = $this->get('chm_document.restrictions_checker');
 
-            $response = new BinaryFileResponse($document->getFilePath(), $status = 200, $headers = array(), $public = true, $contentDisposition = 'attachment', $autoEtag = true, $autoLastModified = true);
+            if (true || $restrictionsChecker->check($document)) {
 
-        } catch (\AccessDeniedException $e) {
-            // redirect to the login page !
-            throw $e;
+                $response = new BinaryFileResponse($document->getFilePath());
+
+                //$response->headers->set('Content-Type', $document->getFiletype());
+                //$response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $document->getNiceName());
+                $response->setContentDisposition('attachment', $document->getNiceName());
+                $response->setAutoEtag();
+                $response->setAutoLastModified();
+                $response::trustXSendfileTypeHeader();
+
+                // retrieve data from request
+                $request = $this->get('request');
+                $userAgent = $request->headers->get('User-Agent');
+                $sourceIp = $request->getClientIp();
+
+                // add failed document delivery
+                $delivery = new Delivery();
+                $delivery->setSuccess(true);
+                $delivery->setSourceIp($sourceIp);
+                $delivery->setUserAgent($userAgent);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($delivery);
+                $em->flush();
+
+                return $response;
+            } else {
+                // error
+                $errorMessage = 'Request did not pass restrictions, see log files for details.';
+            }
+
         } catch (\Exception $e) {
-throw $e;
-            // retrieve data from request
-            $request = $this->get('request');
-            $userAgent = $request->headers->get('User-Agent');
-            $sourceIp = $request->getClientIp();
-
-            // add failed document delivery
-            $delivery = new Delivery();
-            $delivery->setSuccess(false);
-            $delivery->setSourceIp($sourceIp);
-            $delivery->setUserAgent($userAgent);
-            $delivery->setFailureMessage($e->getMessage());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($delivery);
-            $em->flush();
-
-            throw $this->createNotFoundException( 'No such document : ' . $document->getSlug());
+            $errorMessage = $e->getMessage();
         }
-
-        //$response->headers->set('Content-Type', $document->getFiletype());
-        //$response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $document->getNiceName());
-        $response::trustXSendfileTypeHeader();
 
         // retrieve data from request
         $request = $this->get('request');
@@ -56,15 +62,16 @@ throw $e;
 
         // add failed document delivery
         $delivery = new Delivery();
-        $delivery->setSuccess(true);
+        $delivery->setSuccess(false);
         $delivery->setSourceIp($sourceIp);
         $delivery->setUserAgent($userAgent);
+        $delivery->setFailureMessage($errorMessage);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($delivery);
         $em->flush();
 
-        return $response;
+        throw $this->createNotFoundException( 'No such document : ' . $document->getSlug());
     }
 
 }

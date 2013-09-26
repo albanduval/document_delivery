@@ -267,24 +267,6 @@ class Document
     }
 
     /**
-     */
-    public function checkRestrictions()
-    {
-        foreach ($this->getIpRestrictions() as $restriction) {
-            $restriction->check();
-        }
-        foreach ($this->getUserRestrictions() as $restriction) {
-            $restriction->check();
-        }
-        foreach ($this->getSecretRestrictions() as $restriction) {
-            $restriction->check();
-        }
-        foreach ($this->getDownloadCountRestrictions() as $restriction) {
-            $restriction->check();
-        }
-    }
-
-    /**
      * returns true if document can still be downloaded
      *
      * @return boolean
@@ -333,33 +315,6 @@ class Document
     public function getIpRestrictions()
     {
         return $this->ip_restrictions;
-    }
-    /**
-     * @var string
-     */
-    private $filepath;
-
-    /**
-     * Set filepath
-     *
-     * @param  string   $filepath
-     * @return Document
-     */
-    public function setFilepath($filepath)
-    {
-        $this->filepath = $filepath;
-
-        return $this;
-    }
-
-    /**
-     * Get filepath
-     *
-     * @return string
-     */
-    public function getFilepath()
-    {
-        return $this->filepath;
     }
 
     /**
@@ -528,5 +483,32 @@ class Document
     public function getUpdatedBy()
     {
         return $this->updatedBy;
+    }
+    /**
+     * @var file
+     */
+    private $file;
+
+    /**
+     * Set file
+     *
+     * @param  \file    $file
+     * @return Document
+     */
+    public function setFile(\file $file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return \file
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
 }

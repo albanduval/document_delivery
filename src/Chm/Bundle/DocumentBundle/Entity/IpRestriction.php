@@ -146,12 +146,4 @@ class IpRestriction
 
         return $this;
     }
-
-    /**
-     * Check if current request fits this IP rstriction
-     */
-    public function check()
-    {
-        throw new \Exception('IP restriction failed');
-    }
 }

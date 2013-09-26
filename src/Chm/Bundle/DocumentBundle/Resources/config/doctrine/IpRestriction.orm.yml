@@ -24,7 +24,7 @@ Chm\Bundle\DocumentBundle\Entity\IpRestriction:
     manyToOne:
         document:
             targetEntity: Document
-            cascade: {  }
+            cascade: { }
             mappedBy: null
             inversedBy: null
             joinColumns:

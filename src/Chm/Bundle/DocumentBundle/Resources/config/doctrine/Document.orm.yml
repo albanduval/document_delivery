@@ -19,10 +19,8 @@ Chm\Bundle\DocumentBundle\Entity\Document:
             fixed: false
             nullable: true
             column: nice_name
-        filepath:
-            type: string
-            length: 255
-            fixed: false
+        file:
+            type: file
             nullable: false
             column: filepath
         filetype:
@@ -85,6 +83,7 @@ Chm\Bundle\DocumentBundle\Entity\Document:
         ip_restrictions:
             targetEntity: IpRestriction
             mappedBy: document
+            cascade: [ persist ]
         secret_restrictions:
             targetEntity: SecretRestriction
             mappedBy: document

@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="chm_document.ip_restriction_checker.class">Chm\Bundle\DocumentBundle\RestrictionsChecker\IpRestrictionChecker</parameter>
+        <parameter key="chm_document.download_count_restriction_checker.class">Chm\Bundle\DocumentBundle\RestrictionsChecker\DownloadCountRestrictionChecker</parameter>
+        <parameter key="chm_document.user_restriction_checker.class">Chm\Bundle\DocumentBundle\RestrictionsChecker\UserRestrictionChecker</parameter>
+        <parameter key="chm_document.secret_restriction_checker.class">Chm\Bundle\DocumentBundle\RestrictionsChecker\SecretRestrictionChecker</parameter>
+        <parameter key="chm_document.restrictions_checker.class">Chm\Bundle\DocumentBundle\RestrictionsChecker\RestrictionsChecker</parameter>
+    </parameters>
+
+    <services>
+        <service id="chm_document.ip_restriction_checker" class="%chm_document.ip_restriction_checker.class%" scope="request">
+        	<argument type="service" id="logger" />
+    		<tag name="monolog.logger" channel="chm_document" />
+            <argument type="service" id="request" />
+        </service>
+
+        <service id="chm_document.download_count_restriction_checker" class="%chm_document.download_count_restriction_checker.class%" scope="request">
+        	<argument type="service" id="logger" />
+    		<tag name="monolog.logger" channel="chm_document" />
+            <argument type="service" id="request" />
+        </service>
+
+        <service id="chm_document.user_restriction_checker" class="%chm_document.user_restriction_checker.class%" scope="request">
+        	<argument type="service" id="logger" />
+    		<tag name="monolog.logger" channel="chm_document" />
+            <argument type="service" id="request" />
+        </service>
+
+        <service id="chm_document.secret_restriction_checker" class="%chm_document.secret_restriction_checker.class%" scope="request">
+        	<argument type="service" id="logger" />
+    		<tag name="monolog.logger" channel="chm_document" />
+            <argument type="service" id="request" />
+        </service>
+
+        <service id="chm_document.restrictions_checker" class="%chm_document.restrictions_checker.class%" scope="request">
+            <argument type="service" id="chm_document.ip_restriction_checker" />
+            <argument type="service" id="chm_document.download_count_restriction_checker" />
+            <argument type="service" id="chm_document.secret_restriction_checker" />
+            <argument type="service" id="chm_document.user_restriction_checker" />
+        </service>
+    </services>
+
+</container>
