@@ -19,13 +19,25 @@ Chm\Bundle\DocumentBundle\Entity\Document:
             fixed: false
             nullable: true
             column: nice_name
-        file:
-            type: file
-            nullable: false
-            column: filepath
-        filetype:
+        extension:
             type: string
-            length: 10
+            length: 20
+            nullable: false
+        fileName:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+            column: file_name
+        filePath:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+            column: file_path
+        mimeType:
+            type: string
+            length: 100
             fixed: false
             nullable: true
         validTo:

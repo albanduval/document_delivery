@@ -2,6 +2,8 @@
 
 namespace Chm\Bundle\DocumentBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * Document
  */
@@ -20,12 +22,27 @@ class Document
     /**
      * @var string
      */
-    private $niceName;
+    private $fileName;
 
     /**
      * @var string
      */
-    private $filetype;
+    private $niceName;
+
+    /**
+     * This is not a column in the table, it is used to nicely handle file upload by the form
+     */
+    private $file;
+
+    /**
+     * @var string
+     */
+    private $mimeType;
+
+    /**
+     * @var string
+     */
+    private $extension;
 
     /**
      * @var \DateTime
@@ -139,26 +156,49 @@ class Document
     }
 
     /**
-     * Set filetype
+     * Set mimeType
      *
-     * @param  string   $filetype
+     * @param  string   $mimeType
      * @return Document
      */
-    public function setFiletype($filetype)
+    public function setMimetype($mimeType)
     {
-        $this->filetype = $filetype;
+        $this->mimeType = $mimeType;
 
         return $this;
     }
 
     /**
-     * Get filetype
+     * Get mimeType
      *
      * @return string
      */
-    public function getFiletype()
+    public function getMimetype()
     {
-        return $this->filetype;
+        return $this->mimeType;
+    }
+
+    /**
+     * Set extension
+     *
+     * @param  string   $extension
+     * @return Document
+     */
+    public function setExtension($extension)
+    {
+        $this->extension = $extension;
+
+        return $this;
+    }
+
+    /**
+     * Get extension
+     *
+     * @return string
+     */
+    public function getExtension()
+    {
+        return $this->extension;
     }
 
     /**
@@ -484,18 +524,14 @@ class Document
     {
         return $this->updatedBy;
     }
-    /**
-     * @var file
-     */
-    private $file;
 
     /**
      * Set file
      *
-     * @param  \file    $file
+     * @param  UploadedFile $file
      * @return Document
      */
-    public function setFile(\file $file)
+    public function setFile(UploadedFile $file)
     {
         $this->file = $file;
 
@@ -505,10 +541,110 @@ class Document
     /**
      * Get file
      *
-     * @return \file
+     * @return UploadedFile
      */
     public function getFile()
     {
         return $this->file;
+    }
+    /**
+     * @var string
+     */
+    private $filePath;
+
+    /**
+     * Set filePath
+     *
+     * @param  string   $filePath
+     * @return Document
+     */
+    public function setFilepath($filePath)
+    {
+        $this->filePath = $filePath;
+
+        return $this;
+    }
+
+    /**
+     * Get filePath
+     *
+     * @return string
+     */
+    public function getFilepath()
+    {
+        return $this->filePath;
+    }
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../../uploads/'.$this->getUploadDir();
+    }
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'documents/';
+    }
+    public function getAbsoluteFileName()
+    {
+        return $this->filePath . $this->fileName ;
+    }
+
+
+    /**
+     * @var boolean
+     */
+    private $keepOriginalExtension = false;
+
+    /**
+     * 
+     * @return boolean
+     */
+    public function getKeepOriginalExtension()
+    {
+        return $this->keepOriginalExtension;
+    }
+
+    /**
+     * Tells to keep the file extension of the uploaded file, otherwise the extension will be guessed from file content
+     *
+     * @param  boolean Whether or not keep the orinal extension
+     * @return Document
+     */
+    public function setKeepOriginalExtension($keepOriginalExtension)
+    {
+        $this->keepOriginalExtension = $keepOriginalExtension;
+
+        return $this;
+    }
+
+    /**
+     */
+    public function upload()
+    {
+         // the file property can be empty if the field is not required
+        if (null === $this->getFile()) {
+            return;
+        }
+        // set the path property to the fileName where you've saved the file
+        $this->mimeType  = $this->getFile()->getClientMimeType();
+        if( $this->keepOriginalExtension ) {
+            $this->extension = $this->getFile()->getClientOriginalExtension();
+        } else {
+            $this->extension = $this->getFile()->guessClientExtension();
+        }
+        $this->fileName  = date('Ymd-His') . '_' . sha1(uniqid(mt_rand(), true)) . '.' . $this->extension;
+        $this->filePath  = $this->getUploadRootDir();
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+        // move takes the target directory and then the
+        // target fileName to move to
+        $this->getFile()->move(
+            $this->filePath,
+            $this->fileName
+        );
+        // clean up the file property as you won't need it anymore
+        $this->file = null;
     }
 }

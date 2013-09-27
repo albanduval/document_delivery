@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class DownloadDocumentController extends Controller
 {
     /**
-     * @ParamConverter("document", class="ChmDocumentBundle:Document", options={"mapping"={"document_slug"="slug"}})
+     * @ParamConverter("document", class="ChmDocumentBundle:Document", options={"mapping"={"slug"="slug"}})
      */
     public function downloadAction($document)
     {
@@ -21,11 +21,11 @@ class DownloadDocumentController extends Controller
 
             if (true || $restrictionsChecker->check($document)) {
 
-                $response = new BinaryFileResponse($document->getFilePath());
+                $response = new BinaryFileResponse($document->getAbsoluteFileName());
 
                 //$response->headers->set('Content-Type', $document->getFiletype());
                 //$response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $document->getNiceName());
-                $response->setContentDisposition('attachment', $document->getNiceName());
+                $response->setContentDisposition('attachment', $document->getNiceName() . '.' . $document->getExtension() );
                 $response->setAutoEtag();
                 $response->setAutoLastModified();
                 $response::trustXSendfileTypeHeader();
@@ -71,6 +71,7 @@ class DownloadDocumentController extends Controller
         $em->persist($delivery);
         $em->flush();
 
+        throw $e;
         throw $this->createNotFoundException( 'No such document : ' . $document->getSlug());
     }
 

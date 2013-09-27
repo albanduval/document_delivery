@@ -14,26 +14,26 @@
 
     <services>
         <service id="chm_document.ip_restriction_checker" class="%chm_document.ip_restriction_checker.class%" scope="request">
-        	<argument type="service" id="logger" />
-    		<tag name="monolog.logger" channel="chm_document" />
+            <argument type="service" id="logger" />
+            <tag name="monolog.logger" channel="chm_document" />
             <argument type="service" id="request" />
         </service>
 
         <service id="chm_document.download_count_restriction_checker" class="%chm_document.download_count_restriction_checker.class%" scope="request">
-        	<argument type="service" id="logger" />
-    		<tag name="monolog.logger" channel="chm_document" />
+            <argument type="service" id="logger" />
+            <tag name="monolog.logger" channel="chm_document" />
             <argument type="service" id="request" />
         </service>
 
         <service id="chm_document.user_restriction_checker" class="%chm_document.user_restriction_checker.class%" scope="request">
-        	<argument type="service" id="logger" />
-    		<tag name="monolog.logger" channel="chm_document" />
+            <argument type="service" id="logger" />
+            <tag name="monolog.logger" channel="chm_document" />
             <argument type="service" id="request" />
         </service>
 
         <service id="chm_document.secret_restriction_checker" class="%chm_document.secret_restriction_checker.class%" scope="request">
-        	<argument type="service" id="logger" />
-    		<tag name="monolog.logger" channel="chm_document" />
+            <argument type="service" id="logger" />
+            <tag name="monolog.logger" channel="chm_document" />
             <argument type="service" id="request" />
         </service>
 

@@ -1,5 +1,5 @@
 chm_document_download:
-    pattern: /download/{document_slug}
+    pattern: /download/{slug}
     defaults: { _controller: ChmDocumentBundle:DownloadDocument:download }
 
 chm_document_list:
@@ -14,3 +14,6 @@ chm_document_edit:
 chm_document_save:
     pattern: /admin/save
     defaults: { _controller: ChmDocumentBundle:DocumentUpload:save }
+chm_document_delete:
+    pattern: /admin/delete/{id}
+    defaults: { _controller: ChmDocumentBundle:DocumentUpload:delete }

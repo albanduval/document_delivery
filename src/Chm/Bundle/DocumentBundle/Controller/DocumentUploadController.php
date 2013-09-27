@@ -61,6 +61,10 @@ class DocumentUploadController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
+
+            // this could be removed with usage of livecycle callbacks on the entity : prePersist and postPersist event
+            $document->upload();
+
             $em->persist($document);
             $em->flush();
 
@@ -72,6 +76,34 @@ class DocumentUploadController extends Controller
             'document' => $document,
             'form'   => $form->createView()
         );
+    }
+
+    /**
+     * Save document action
+     *
+     * @Template("ChmDocumentBundle:DocumentUpload:edit.html.twig")
+     * @ParamConverter("document", class="ChmDocumentBundle:Document", options={"mapping"={"id"="id"}})
+     */
+    public function saveAction($document)
+    {
+        $document  = new Document();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new DocumentType(), $document);
+        $form->bind($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+
+            // this could be removed with usage of livecycle callbacks on the entity : prePersist and postPersist event
+            $document->upload();
+
+            $em->persist($document);
+            $em->flush();
+
+
+        }
+
+        return $this->redirect($this->generateUrl('chm_document_list'));
     }
 
 }
