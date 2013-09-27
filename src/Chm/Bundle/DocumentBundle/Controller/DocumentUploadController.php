@@ -84,7 +84,7 @@ class DocumentUploadController extends Controller
      * @Template("ChmDocumentBundle:DocumentUpload:edit.html.twig")
      * @ParamConverter("document", class="ChmDocumentBundle:Document", options={"mapping"={"id"="id"}})
      */
-    public function saveAction($document)
+    public function deleteAction($document)
     {
         $document  = new Document();
         $request = $this->getRequest();
