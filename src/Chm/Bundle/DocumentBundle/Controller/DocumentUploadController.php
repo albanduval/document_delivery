@@ -86,18 +86,13 @@ class DocumentUploadController extends Controller
      */
     public function deleteAction($document)
     {
-        $document  = new Document();
-        $request = $this->getRequest();
-        $form    = $this->createForm(new DocumentType(), $document);
-        $form->bind($request);
-
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
 
             // this could be removed with usage of livecycle callbacks on the entity : prePersist and postPersist event
-            $document->upload();
+            $document->deleteFile();
 
-            $em->persist($document);
+            $em->remove($document);
             $em->flush();
 
 
