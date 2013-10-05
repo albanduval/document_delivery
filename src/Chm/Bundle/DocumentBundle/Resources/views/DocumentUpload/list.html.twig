@@ -2,30 +2,33 @@
 
 {% block title %}ChmDocumentBundle:DocumentUpload:edit{% endblock %}
 
+{% block h1 %}
+Gestion des documents
+{% endblock %}
+
 {% block body %}
-<h1>Welcome to the DocumentUpload:list page</h1>
-<table class="table">
+<table class="table table-bordered table-striped">
 	<thead>
 		<tr>
-			<td>Slug</td>
-			<td>Valid ?</td>
-			<td></td>
+			<th>Slug</th>
+			<th>Valid ?</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 		{% for document in documents %}
-		<tr>
+		<tr class="{% if document.isDownloadable  %}success{% else %}error{% endif %}">
 		    <td>{{ document.slug }}</td>
 		    <td>{{ document.valid }}</td>
 		    <td>
+		        <a href="{{ path('chm_document_download', {'slug': document.slug}) }}">
+		        	<span class="glyphicon glyphicon-download"></span>
+		        </a>
 		        <a href="{{ path('chm_document_edit', {'id': document.id}) }}">
 		        	<span class="glyphicon glyphicon-edit"></span>
 	        	</a>
 		        <a href="{{ path('chm_document_delete', {'id': document.id}) }}">
 		        	<span class="glyphicon glyphicon-remove"></span>
-		        </a>
-		        <a href="{{ path('chm_document_download', {'slug': document.slug}) }}">
-		        	<span class="glyphicon glyphicon-download"></span>
 		        </a>
 		    </td>
 		</tr>

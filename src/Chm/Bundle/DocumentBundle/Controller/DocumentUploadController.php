@@ -4,6 +4,7 @@ namespace Chm\Bundle\DocumentBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Chm\Bundle\DocumentBundle\Entity\Document;
 use Chm\Bundle\DocumentBundle\Form\DocumentType;
 
@@ -86,17 +87,22 @@ class DocumentUploadController extends Controller
      */
     public function deleteAction($document)
     {
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getEntityManager();
 
-            // this could be removed with usage of livecycle callbacks on the entity : prePersist and postPersist event
-            $document->deleteFile();
-
-            $em->remove($document);
-            $em->flush();
-
-
+        // this could be removed with usage of livecycle callbacks on the entity : prePersist and postPersist event
+        if(!$document->deleteFile()) {
+            $this->get('session')->getFlashBag()->add(
+                'warning',
+                'The document ' . $document->getAbsoluteFileName() . ' could not be deleted on filesystem (document either not present or not writable)' 
+            );
         }
+        $em->remove($document);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add(
+            'success',
+            'The document has been deleted successfully.'
+        );
 
         return $this->redirect($this->generateUrl('chm_document_list'));
     }

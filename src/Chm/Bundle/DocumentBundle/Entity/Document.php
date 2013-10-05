@@ -647,4 +647,28 @@ class Document
         // clean up the file property as you won't need it anymore
         $this->file = null;
     }
+
+    /**
+     * Delete the associated physical file
+     *
+     * @return boolean true on success
+     */
+    public function deleteFile()
+    {
+        try{
+            return unlink($this->getAbsoluteFileName());
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if there is any possibility to download the document as standard user
+     *
+     * @return boolean Downloadable document
+     */
+    public function isDownloadable()
+    {
+        return true;
+    }
 }

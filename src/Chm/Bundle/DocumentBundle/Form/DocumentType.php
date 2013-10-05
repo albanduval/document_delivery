@@ -27,6 +27,10 @@ class DocumentType extends AbstractType
                 'type' => new IpRestrictionType(),
                 'allow_add' => true,
                 'by_reference' => false,
+                'widget_add_btn' => array(
+                                    'icon'  => 'plus-sign',
+                                    'label' => 'Add IP restriction'
+                                    ),
                 ))
             ->add('downloadCountRestrictions', 'collection', array(
                 'type' => new DownloadCountRestrictionType(),
