@@ -11,8 +11,17 @@ Chm\Bundle\DocumentBundle\Entity\Document:
             type: string
             length: 255
             fixed: false
-            nullable: true
+            nullable: false
+            unique: true
             column: slug
+            gedmo:
+                slug:
+                    separator: _
+                    style: camel
+                    fields:
+                        - id
+                        - niceName
+                        - extension
         niceName:
             type: string
             length: 255
@@ -90,19 +99,26 @@ Chm\Bundle\DocumentBundle\Entity\Document:
             orphanRemoval: false
             gedmo:
                 blameable:
-                    on: create
+                    on: update
     oneToMany:
         ip_restrictions:
             targetEntity: IpRestriction
             mappedBy: document
-            cascade: [ persist ]
+            cascade: [ persist, remove ]
         secret_restrictions:
             targetEntity: SecretRestriction
             mappedBy: document
+            cascade: [ persist, remove ]
         download_count_restrictions:
             targetEntity: DownloadCountRestriction
             mappedBy: document
+            cascade: [ persist, remove ]
         user_restrictions:
             targetEntity: UserRestriction
             mappedBy: document
+            cascade: [ persist, remove ]
+        deliveries:
+            targetEntity: Delivery
+            mappedBy: document
+            cascade: [ persist, remove ]
     lifecycleCallbacks: {  }

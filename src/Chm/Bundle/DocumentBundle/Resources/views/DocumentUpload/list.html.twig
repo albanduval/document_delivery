@@ -21,14 +21,17 @@ Gestion des documents
 		    <td>{{ document.slug }}</td>
 		    <td>{{ document.valid }}</td>
 		    <td>
-		        <a href="{{ path('chm_document_download', {'slug': document.slug}) }}">
+		        <a class="btn btn-default" href="{{ path('chm_document_download', {'slug': document.slug}) }}">
 		        	<span class="glyphicon glyphicon-download"></span>
+		        	Download
 		        </a>
-		        <a href="{{ path('chm_document_edit', {'id': document.id}) }}">
+		        <a class="btn btn-default" href="{{ path('chm_document_edit', {'id': document.id}) }}">
 		        	<span class="glyphicon glyphicon-edit"></span>
+		        	Edit
 	        	</a>
-		        <a href="{{ path('chm_document_delete', {'id': document.id}) }}">
+		        <a class="btn btn-danger" href="{{ path('chm_document_delete', {'id': document.id}) }}">
 		        	<span class="glyphicon glyphicon-remove"></span>
+		        	Delete
 		        </a>
 		    </td>
 		</tr>

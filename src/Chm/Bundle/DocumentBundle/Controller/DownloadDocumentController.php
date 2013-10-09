@@ -19,7 +19,7 @@ class DownloadDocumentController extends Controller
         try {
             $restrictionsChecker = $this->get('chm_document.restrictions_checker');
 
-            if (true || $restrictionsChecker->check($document)) {
+            if ($restrictionsChecker->check($document)) {
 
                 $response = new BinaryFileResponse($document->getAbsoluteFileName());
 
@@ -36,10 +36,7 @@ class DownloadDocumentController extends Controller
                 $sourceIp = $request->getClientIp();
 
                 // add failed document delivery
-                $delivery = new Delivery();
-                $delivery->setSuccess(true);
-                $delivery->setSourceIp($sourceIp);
-                $delivery->setUserAgent($userAgent);
+                $delivery = $document->logDelivery(true, $sourceIp, $userAgent, $this->getUser());
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($delivery);
@@ -61,11 +58,7 @@ class DownloadDocumentController extends Controller
         $sourceIp = $request->getClientIp();
 
         // add failed document delivery
-        $delivery = new Delivery();
-        $delivery->setSuccess(false);
-        $delivery->setSourceIp($sourceIp);
-        $delivery->setUserAgent($userAgent);
-        $delivery->setFailureMessage($errorMessage);
+        $delivery = $document->logDelivery($success = false, $sourceIp, $userAgent, $this->getUser());
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($delivery);

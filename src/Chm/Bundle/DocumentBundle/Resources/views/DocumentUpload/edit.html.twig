@@ -1,12 +1,26 @@
 {% extends "ChmDocumentBundle:DocumentUpload:documentUploadLayout.html.twig" %}
 
+
+{% block _chm_bundle_documentbundle_document_slug_row %}
+	<div class="form_row">
+		{% if value is defined and value is not empty %}
+		<a href="{{ path( 'chm_document_download', { slug: value } ) }}">
+			Current file
+		</a>
+		{% endif %}
+	</div>
+{% endblock _chm_bundle_documentbundle_document_slug_row %}
+
 {% block title %}ChmDocumentBundle:DocumentUpload:edit{% endblock %}
 
 {% block body %}
 <h1>Welcome to the DocumentUpload:edit page</h1>
-<a class="btn btn-default btn-lg" href="{{ path('chm_document_list') }}"> <span class="glyphicon glyphicon-backward"></span> Back to list</a>
-<form action="{{ path('chm_document_save') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-      <input type="submit" />
-</form>
+<a class="btn btn-default btn-lg" href="{{ path('chm_document_list') }}">
+	<span class="glyphicon glyphicon-arrow-left"></span>
+	Back to list
+</a>
+
+	{% form_theme form _self %}
+
+	{{ form(form) }}
 {% endblock %}

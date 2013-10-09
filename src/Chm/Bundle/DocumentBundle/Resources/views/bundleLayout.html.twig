@@ -16,6 +16,16 @@
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
             {% endstylesheets %}
         {% endblock %}
+
+        {% block head_script %}
+        {# Overwrite this block to add your own js here, to get them generated into final files #}
+        {% javascripts
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% endblock head_script %}
+
     </head>
     <body>
 
@@ -38,13 +48,13 @@
                 </div><!--/.nav-collapse -->
             </div>
         </div>
-        {% endblock %}
+        {% endblock navbar %}
 
 
         <div class="container">
             <div class="">
-                <h1>{% block h1 %}Document Delivery{% endblock %}</h1>
-                {% block flashmessage %}
+                <h1>{% block h1 %}Document Delivery{% endblock h1 %}</h1>
+                {% block flashmessages %}
                     {% for flashMessage in app.session.flashbag.get('success') %}
                 <div class="alert alert-success">
                     {{ flashMessage }}
@@ -65,15 +75,15 @@
                     {{ flashMessage }}
                 </div>
                     {% endfor %}
-                {% endblock %}
+                {% endblock flashmessages %}
                 {% block body %}
                 <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-                {% endblock %}
+                {% endblock body %}
             </div>
         </div><!-- /.container -->
-        
 
-        {% block javascripts %}
+
+        {% block foot_script %}
             {% javascripts
                 '@MopaBootstrapBundle/Resources/bootstrap/js/tooltip.js'
                 '@MopaBootstrapBundle/Resources/bootstrap/js/affix.js'
@@ -90,10 +100,9 @@
                 '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
                 '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
                 '@MopaBootstrapBundle/Resources/public/js/eyecon-bootstrap-datepicker.js'
-            %}        
+            %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
-        {% endblock %}
+        {% endblock foot_script %}
     </body>
 </html>
-

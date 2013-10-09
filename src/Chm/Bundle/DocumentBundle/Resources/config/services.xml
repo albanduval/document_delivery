@@ -13,6 +13,7 @@
     </parameters>
 
     <services>
+
         <service id="chm_document.ip_restriction_checker" class="%chm_document.ip_restriction_checker.class%" scope="request">
             <argument type="service" id="logger" />
             <tag name="monolog.logger" channel="chm_document" />

@@ -16,37 +16,53 @@ class DocumentType extends AbstractType
     {
         $builder
             ->add('id', 'hidden')
-            ->add('slug')
             ->add('niceName')
-            ->add('keepOriginalExtension', 'checkbox')
+            ->add('keepOriginalExtension', 'checkbox', ['required' => false])
             ->add('file', 'file')
+            ->add('slug')
             ->add('validTo')
             ->add('notifySuccess')
             ->add('notifyFailure')
-            ->add('ipRestrictions', 'collection', array(
+            ->add('ipRestrictions', 'collection', [
                 'type' => new IpRestrictionType(),
                 'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
-                'widget_add_btn' => array(
-                                    'icon'  => 'plus-sign',
-                                    'label' => 'Add IP restriction'
-                                    ),
-                ))
-            ->add('downloadCountRestrictions', 'collection', array(
+                'widget_add_btn' => [
+                                    'label' => 'Add'
+                                    ],
+                ])
+            ->add('downloadCountRestrictions', 'collection', [
                 'type' => new DownloadCountRestrictionType(),
                 'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
-                ))
-            ->add('SecretRestrictions', 'collection', array(
+                'widget_add_btn' => [
+                                    'label' => 'Add'
+                                    ],
+                ])
+            ->add('SecretRestrictions', 'collection', [
                 'type' => new SecretRestrictionType(),
                 'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
-                ))
-            ->add('userRestrictions', 'collection', array(
+                'widget_add_btn' => [
+                                    'label' => 'Add'
+                                    ],
+                ])
+            ->add('userRestrictions', 'collection', [
                 'type' => new UserRestrictionType(),
                 'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
-                ))
+                'widget_add_btn' => [
+                                    'label' => 'Add'
+                                    ],
+                ])
+            ->add('save', 'submit', [
+                    'icon'       => 'save',
+                ]
+            );
         ;
     }
 

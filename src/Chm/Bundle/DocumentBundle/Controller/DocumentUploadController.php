@@ -40,7 +40,7 @@ class DocumentUploadController extends Controller
             $document = $repository->find($id);
         }
 
-        $form   = $this->createForm(new DocumentType(), $document);
+        $form   = $this->createForm(new DocumentType(), $document, ['action' => $this->generateUrl('chm_document_save')]);
 
         return array(
             'document' => $document,
@@ -61,12 +61,39 @@ class DocumentUploadController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
+            $em = $this->getDoctrine()->getManager();
 
             // this could be removed with usage of livecycle callbacks on the entity : prePersist and postPersist event
             $document->upload();
 
             $em->persist($document);
+/*
+            // persist collections
+            foreach ($document->getIpRestrictions() as $ipRestriction) {
+                foreach ($ipRestriction as $key => $toDel) {
+                    if ($toDel->getId() === $tag->getId()) {
+                        unset($ipRestriction[$key]);
+                    }
+                }
+            }
+
+            // supprime la relation entre le ipRestriction et la « Document »
+            foreach ($ipRestrictions as $ipRestriction) {
+                // supprime la « Task » du Tag
+                $ipRestriction->getDocuments()->removeElement($document);
+
+                // si c'était une relation ManyToOne, vous pourriez supprimer la
+                // relation comme ceci
+                // $ipRestriction->setTask(null);
+
+                $em->persist($ipRestriction);
+
+                // si vous souhaitiez supprimer totalement le Tag, vous pourriez
+                // aussi faire comme cela
+                // $em->remove($ipRestriction);
+            }
+*/
+
             $em->flush();
 
             //return $this->redirect($this->generateUrl('article_show', array('id' => $document->getId())));
@@ -87,13 +114,13 @@ class DocumentUploadController extends Controller
      */
     public function deleteAction($document)
     {
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
 
         // this could be removed with usage of livecycle callbacks on the entity : prePersist and postPersist event
-        if(!$document->deleteFile()) {
+        if (!$document->deleteFile()) {
             $this->get('session')->getFlashBag()->add(
                 'warning',
-                'The document ' . $document->getAbsoluteFileName() . ' could not be deleted on filesystem (document either not present or not writable)' 
+                'The document ' . $document->getAbsoluteFileName() . ' could not be deleted on filesystem (document either not present or not writable)'
             );
         }
         $em->remove($document);

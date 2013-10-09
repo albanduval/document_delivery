@@ -31,13 +31,6 @@ Chm\Bundle\DocumentBundle\Entity\Delivery:
             gedmo:
                 timestampable:
                     on: create
-        updatedAt:
-            type: datetime
-            nullable: false
-            column: updated_at
-            gedmo:
-                timestampable:
-                    on: update
     manyToOne:
         document:
             targetEntity: Document
@@ -55,18 +48,6 @@ Chm\Bundle\DocumentBundle\Entity\Delivery:
             inversedBy: null
             joinColumns:
                 created_by:
-                    referencedColumnName: id
-            orphanRemoval: false
-            gedmo:
-                blameable:
-                    on: create
-        updatedBy:
-            targetEntity: User
-            cascade: {  }
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                updated_by:
                     referencedColumnName: id
             orphanRemoval: false
             gedmo:

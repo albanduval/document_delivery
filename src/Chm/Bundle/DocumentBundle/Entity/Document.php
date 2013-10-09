@@ -3,6 +3,7 @@
 namespace Chm\Bundle\DocumentBundle\Entity;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Chm\Bundle\DocumentBundle\Entity\Delivery;
 
 /**
  * Document
@@ -98,6 +99,11 @@ class Document
      * @var \Doctrine\Common\Collections\Collection
      */
     private $user_restrictions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $deliveries;
 
     /**
      * Get id
@@ -358,6 +364,16 @@ class Document
     }
 
     /**
+     * Get deliveries
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDeliveries()
+    {
+        return $this->deliveries;
+    }
+
+    /**
      * Set updatedAt
      *
      * @param  \DateTime $updatedAt
@@ -598,7 +614,7 @@ class Document
     private $keepOriginalExtension = false;
 
     /**
-     * 
+     *
      * @return boolean
      */
     public function getKeepOriginalExtension()
@@ -629,7 +645,7 @@ class Document
         }
         // set the path property to the fileName where you've saved the file
         $this->mimeType  = $this->getFile()->getClientMimeType();
-        if( $this->keepOriginalExtension ) {
+        if ($this->keepOriginalExtension) {
             $this->extension = $this->getFile()->getClientOriginalExtension();
         } else {
             $this->extension = $this->getFile()->guessClientExtension();
@@ -655,9 +671,9 @@ class Document
      */
     public function deleteFile()
     {
-        try{
+        try {
             return unlink($this->getAbsoluteFileName());
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -670,5 +686,19 @@ class Document
     public function isDownloadable()
     {
         return true;
+    }
+
+    /**
+     * Logs a delivery attempt
+     */
+    public function logDelivery($success, $sourceIp, $userAgent)
+    {
+        $delivery = new Delivery();
+        $delivery->setSuccess(true);
+        $delivery->setSourceIp($sourceIp);
+        $delivery->setUserAgent($userAgent);
+        $delivery->setDocument($this);
+
+        return $delivery;
     }
 }
