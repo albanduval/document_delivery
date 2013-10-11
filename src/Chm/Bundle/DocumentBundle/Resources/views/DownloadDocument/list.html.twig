@@ -1,0 +1,34 @@
+{% extends "ChmDocumentBundle:DocumentUpload:documentUploadLayout.html.twig" %}
+
+{% block title %}ChmDocumentBundle:DocumentUpload:edit{% endblock %}
+
+{% block h1 %}
+Document accessibles
+{% endblock %}
+
+{% block body %}
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>Slug</th>
+			<th>Valid ?</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for document in documents %}
+		<tr class="{% if document.isDownloadable  %}success{% else %}error{% endif %}">
+		    <td>{{ document.slug }}</td>
+		    <td>{{ document.valid }}</td>
+		    <td>
+		        <a class="btn btn-default" href="{{ path('chm_document_download', {'slug': document.slug}) }}">
+		        	<span class="glyphicon glyphicon-download"></span>
+		        	Download
+		        </a>
+		    </td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<a href="{{ path('chm_document_create') }}">New</a>
+{% endblock %}
