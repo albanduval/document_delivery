@@ -1,0 +1,10 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}{% trans %}ChmDocumentBundle:DownloadDocument:download{% endtrans %}{% endblock %}
+
+{% block body %}
+<h1>Welcome to the DownloadDocument:download page</h1>
+<p>
+    {% trans %}Here is the document slug:{% endtrans %} {{ document.slug }}
+</p>
+{% endblock %}
