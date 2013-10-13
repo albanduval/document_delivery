@@ -1,0 +1,6 @@
+Download allowed if done between one of the following IPs:
+<ul>
+{% for restriction in restrictions %}
+<li>{{ restriction.ipAddress }} / {{ restriction.netmask }}</li>
+{% endfor %}
+</ul>

@@ -1,0 +1,6 @@
+Download allowed for the following users:
+<ul>
+{% for restriction in restrictions %}
+<li>#{{ restriction.user.id }} - {{ restriction.user.username }}</li>
+{% endfor %}
+</ul>

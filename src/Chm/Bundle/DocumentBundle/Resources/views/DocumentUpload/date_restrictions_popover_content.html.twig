@@ -1,0 +1,6 @@
+Download allowed if done between one of the following date range :
+<ul>
+{% for restriction in restrictions %}
+<li>from {{ restriction.fromDate|date() }} to {{ restriction.toDate|date() }}</li>
+{% endfor %}
+</ul>

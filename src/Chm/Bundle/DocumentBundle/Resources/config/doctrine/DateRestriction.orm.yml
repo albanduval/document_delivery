@@ -1,0 +1,29 @@
+Chm\Bundle\DocumentBundle\Entity\DateRestriction:
+    type: entity
+    table: date_restriction
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        fromDate:
+            type: datetime
+            nullable: true
+        toDate:
+            type: datetime
+            nullable: true
+        comment:
+            type: text
+            nullable: true
+    manyToOne:
+        document:
+            targetEntity: Document
+            cascade: { }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                document_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

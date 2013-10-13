@@ -1,0 +1,17 @@
+Download allowed if at least one of the following limit is not reached :
+<ul>
+{% for restriction in restrictions %}
+<li>
+	{{ restriction.maxDownloadCount }} downloads, including 
+	{% if restriction.failureCount and restriction.successCount %}
+	both download successes and failures
+	{% elseif restriction.failureCount %}
+	only download successes
+	{% elseif restriction.failureCount %}
+	only download failures
+	{% else %}
+	nothing (this is a technically possible case, but stupid in the reality, it would be just better to delete this restriction)
+	{% endif %}.
+</li>
+{% endfor %}
+</ul>
