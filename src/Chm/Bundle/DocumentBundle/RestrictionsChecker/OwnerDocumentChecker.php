@@ -37,7 +37,7 @@ class OwnerDocumentChecker
     {
         $this->logger->debug('Owner restriction check : is current user the owner of doc #' . $document->getId() . ' ?');
 
-        if(!is_object($this->getUser())) {
+        if (!is_object($this->getUser())) {
             $this->logger->debug('  > NO (no authenticated user)');
 
             return false;
@@ -45,7 +45,7 @@ class OwnerDocumentChecker
 
         // allow download for all admins
         if ($this->getUser()->getId() === $document->getCreatedBy()->getId()) {
-            $this->logger->debug('  > YES - owner is #' . );
+            $this->logger->debug('  > YES - owner is #' . $this->getUser()->getId());
 
             return true;
         }

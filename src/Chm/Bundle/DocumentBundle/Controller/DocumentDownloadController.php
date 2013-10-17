@@ -22,7 +22,7 @@ class DocumentDownloadController extends Controller
                         ->getDoctrine()
                         ->getRepository('ChmDocumentBundle:Document');
 
-        $documents = $repository->findAllowedByUser($this->getUser());
+        $documents = $repository->findAllowedForUser($this->getUser());
 
         return array(
             'documents' => $documents
@@ -76,6 +76,7 @@ class DocumentDownloadController extends Controller
                             );
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
+            throw $e;
         }
 
         // retrieve data from request

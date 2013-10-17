@@ -5,7 +5,7 @@ namespace Chm\Bundle\DocumentBundle\Entity;
 /**
  * IpRestriction
  */
-class IpRestriction
+class IpRestriction implements RestrictionInterface
 {
     /**
      * @var integer

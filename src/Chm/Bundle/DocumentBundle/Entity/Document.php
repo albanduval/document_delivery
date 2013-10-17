@@ -46,11 +46,6 @@ class Document
     private $extension;
 
     /**
-     * @var \DateTime
-     */
-    private $validTo;
-
-    /**
      * @var string
      */
     private $notifySuccess;
@@ -83,22 +78,27 @@ class Document
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $ip_restrictions;
+    private $ipRestrictions;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $secret_restrictions;
+    private $secretRestrictions;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $download_count_restrictions;
+    private $downloadCountRestrictions;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $user_restrictions;
+    private $userRestrictions;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $dateRestrictions;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -231,29 +231,6 @@ class Document
     }
 
     /**
-     * Set validTo
-     *
-     * @param  \DateTime $validTo
-     * @return Document
-     */
-    public function setValidTo($validTo)
-    {
-        $this->validTo = $validTo;
-
-        return $this;
-    }
-
-    /**
-     * Get validTo
-     *
-     * @return \DateTime
-     */
-    public function getValidTo()
-    {
-        return $this->validTo;
-    }
-
-    /**
      * Set notifySuccess
      *
      * @param  string   $notifySuccess
@@ -327,40 +304,44 @@ class Document
      */
     public function __construct()
     {
-        $this->ip_restrictions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateRestrictions          = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ipRestrictions            = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->secretRestrictions        = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->downloadCountRestrictions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userRestrictions          = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add ip_restrictions
+     * Add ipRestrictions
      *
      * @param  \Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions
      * @return Document
      */
     public function addIpRestriction(\Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions)
     {
-        $this->ip_restrictions[] = $ipRestrictions;
+        $this->ipRestrictions[] = $ipRestrictions;
 
         return $this;
     }
 
     /**
-     * Remove ip_restrictions
+     * Remove ipRestrictions
      *
      * @param \Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions
      */
     public function removeIpRestriction(\Chm\Bundle\DocumentBundle\Entity\IpRestriction $ipRestrictions)
     {
-        $this->ip_restrictions->removeElement($ipRestrictions);
+        $this->ipRestrictions->removeElement($ipRestrictions);
     }
 
     /**
-     * Get ip_restrictions
+     * Get ipRestrictions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getIpRestrictions()
     {
-        return $this->ip_restrictions;
+        return $this->ipRestrictions;
     }
 
     /**
@@ -397,102 +378,135 @@ class Document
     }
 
     /**
-     * Add secret_restrictions
+     * Add secretRestrictions
      *
      * @param  \Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions
      * @return Document
      */
     public function addSecretRestriction(\Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions)
     {
-        $this->secret_restrictions[] = $secretRestrictions;
+        $this->secretRestrictions[] = $secretRestrictions;
 
         return $this;
     }
 
     /**
-     * Remove secret_restrictions
+     * Remove secretRestrictions
      *
      * @param \Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions
      */
     public function removeSecretRestriction(\Chm\Bundle\DocumentBundle\Entity\SecretRestriction $secretRestrictions)
     {
-        $this->secret_restrictions->removeElement($secretRestrictions);
+        $this->secretRestrictions->removeElement($secretRestrictions);
     }
 
     /**
-     * Get secret_restrictions
+     * Get secretRestrictions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getSecretRestrictions()
     {
-        return $this->secret_restrictions;
+        return $this->secretRestrictions;
     }
 
     /**
-     * Add download_count_restrictions
+     * Add downloadCountRestrictions
      *
      * @param  \Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions
      * @return Document
      */
     public function addDownloadCountRestriction(\Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions)
     {
-        $this->download_count_restrictions[] = $downloadCountRestrictions;
+        $this->downloadCountRestrictions[] = $downloadCountRestrictions;
 
         return $this;
     }
 
     /**
-     * Remove download_count_restrictions
+     * Remove downloadCountRestrictions
      *
      * @param \Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions
      */
     public function removeDownloadCountRestriction(\Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction $downloadCountRestrictions)
     {
-        $this->download_count_restrictions->removeElement($downloadCountRestrictions);
+        $this->downloadCountRestrictions->removeElement($downloadCountRestrictions);
     }
 
     /**
-     * Get download_count_restrictions
+     * Get downloadCountRestrictions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getDownloadCountRestrictions()
     {
-        return $this->download_count_restrictions;
+        return $this->downloadCountRestrictions;
     }
 
     /**
-     * Add user_restrictions
+     * Add userRestrictions
      *
      * @param  \Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions
      * @return Document
      */
     public function addUserRestriction(\Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions)
     {
-        $this->user_restrictions[] = $userRestrictions;
+        $this->userRestrictions[] = $userRestrictions;
 
         return $this;
     }
 
     /**
-     * Remove user_restrictions
+     * Remove userRestrictions
      *
      * @param \Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions
      */
     public function removeUserRestriction(\Chm\Bundle\DocumentBundle\Entity\UserRestriction $userRestrictions)
     {
-        $this->user_restrictions->removeElement($userRestrictions);
+        $this->userRestrictions->removeElement($userRestrictions);
     }
 
     /**
-     * Get user_restrictions
+     * Get userRestrictions
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getUserRestrictions()
     {
-        return $this->user_restrictions;
+        return $this->userRestrictions;
+    }
+
+    /**
+     * Add dateRestrictions
+     *
+     * @param  \Chm\Bundle\DocumentBundle\Entity\DateRestriction $dateRestrictions
+     * @return Document
+     */
+    public function addDateRestriction(\Chm\Bundle\DocumentBundle\Entity\DateRestriction $dateRestrictions)
+    {
+        $this->dateRestrictions[] = $dateRestrictions;
+
+        return $this;
+    }
+
+    /**
+     * Remove dateRestrictions
+     *
+     * @param \Chm\Bundle\DocumentBundle\Entity\DateRestriction $dateRestrictions
+     */
+    public function removeDateRestriction(\Chm\Bundle\DocumentBundle\Entity\DateRestriction $dateRestrictions)
+    {
+        $this->dateRestrictions->removeElement($dateRestrictions);
+    }
+
+    /**
+     * Get dateRestrictions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDateRestrictions()
+    {
+        return $this->dateRestrictions;
     }
 
     /**

@@ -19,7 +19,8 @@ class DocumentUploadController extends Controller
                         ->getDoctrine()
                         ->getRepository('ChmDocumentBundle:Document');
 
-        $documents = $repository->findAll();
+        // retrieve documents owned by current user
+        $documents = $repository->findByCreatedBy($this->getUser());
 
         return array(
             'documents' => $documents
@@ -31,16 +32,15 @@ class DocumentUploadController extends Controller
      */
     public function editAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+
         if ($id === 0) {
             $document = new Document();
         } else {
-            $repository = $this
-                            ->getDoctrine()
-                            ->getRepository('ChmDocumentBundle:Document');
-            $document = $repository->find($id);
+            $document = $em->getRepository('ChmDocumentBundle:Document')->find($id);
         }
 
-        $form   = $this->createForm(new DocumentType(), $document, ['action' => $this->generateUrl('chm_document_save')]);
+        $form   = $this->createForm(new DocumentType(), $document, ['action' => $this->generateUrl('chm_document_save', ['id'=>$id])]);
 
         return array(
             'document' => $document,
@@ -53,50 +53,55 @@ class DocumentUploadController extends Controller
      *
      * @Template("ChmDocumentBundle:DocumentUpload:edit.html.twig")
      */
-    public function saveAction()
+    public function saveAction($id)
     {
-        $document  = new Document();
+        $em = $this->getDoctrine()->getManager();
         $request = $this->getRequest();
+
+        if ($id > 0) {
+            $document = $em->getRepository('ChmDocumentBundle:Document')->find($id);
+        } else {
+            $document = new Document();
+        }
+
         $form    = $this->createForm(new DocumentType(), $document);
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
             // this could be removed with usage of livecycle callbacks on the entity : prePersist and postPersist event
             $document->upload();
 
             $em->persist($document);
-/*
-            // persist collections
-            foreach ($document->getIpRestrictions() as $ipRestriction) {
-                foreach ($ipRestriction as $key => $toDel) {
-                    if ($toDel->getId() === $tag->getId()) {
-                        unset($ipRestriction[$key]);
-                    }
-                }
+
+            foreach ($document->getDateRestrictions() as $restriction) {
+                $restriction->setDocument($document);
+                $em->persist($restriction);
             }
 
-            // supprime la relation entre le ipRestriction et la « Document »
-            foreach ($ipRestrictions as $ipRestriction) {
-                // supprime la « Task » du Tag
-                $ipRestriction->getDocuments()->removeElement($document);
-
-                // si c'était une relation ManyToOne, vous pourriez supprimer la
-                // relation comme ceci
-                // $ipRestriction->setTask(null);
-
-                $em->persist($ipRestriction);
-
-                // si vous souhaitiez supprimer totalement le Tag, vous pourriez
-                // aussi faire comme cela
-                // $em->remove($ipRestriction);
+            foreach ($document->getIpRestrictions() as $restriction) {
+                $restriction->setDocument($document);
+                $em->persist($restriction);
             }
-*/
+
+            foreach ($document->getSecretRestrictions() as $restriction) {
+                $restriction->setDocument($document);
+                $em->persist($restriction);
+            }
+
+            foreach ($document->getDownloadCountRestrictions() as $restriction) {
+                $restriction->setDocument($document);
+                $em->persist($restriction);
+            }
+
+            foreach ($document->getUserRestrictions() as $restriction) {
+                $restriction->setDocument($document);
+                $em->persist($restriction);
+            }
 
             $em->flush();
 
-            //return $this->redirect($this->generateUrl('article_show', array('id' => $document->getId())));
+            return $this->redirect($this->generateUrl('chm_document_edit', array('id' => $document->getId())));
 
         }
 

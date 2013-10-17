@@ -7,10 +7,11 @@ Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction:
             generator:
                 strategy: AUTO
     fields:
-        limit:
+        maxDownloadCount:
             type: integer
             unsigned: false
-            nullable: true
+            nullable: false
+            column: max_download_count
         failureCount:
             type: boolean
             nullable: true

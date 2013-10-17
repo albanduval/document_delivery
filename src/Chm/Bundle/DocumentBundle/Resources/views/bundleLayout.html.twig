@@ -8,8 +8,12 @@
         <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <title>{% block title %}Document Delivery{% endblock %}</title>
         {% block stylesheets %}
+                {#
+                'bundles/mopabootstrap/less/mopabootstrapbundle-fa.less'
+                'bundles/mopabootstrap/less/eyecon-bootstrap-datepicker.less'
+                #}
             {% stylesheets
-                '@MopaBootstrapBundle/Resources/public/less/mopabootstrapbundle.less'
+                '@MopaBootstrapBundle/Resources/public/less/mopabootstrapbundle-fa.less'
                 '@MopaBootstrapBundle/Resources/public/less/eyecon-datepicker.less'
                 '@ChmDocumentBundle/Resources/public/css/document-delivery.css'
             %}
@@ -18,12 +22,14 @@
         {% endblock %}
 
         {% block head_script %}
-        {# Overwrite this block to add your own js here, to get them generated into final files #}
-        {% javascripts
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'
-        %}
+        {# Overwrite this block to add your own js here, to get them generated into final files
+                'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'
+                #}
+            {% javascripts
+                '@ChmDocumentBundle/Resources/public/js/jquery.1.9.1.min.js'
+            %}
             <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+            {% endjavascripts %}
         {% endblock head_script %}
 
     </head>
@@ -38,12 +44,23 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Document Delivery</a>
+                    <a class="navbar-brand" href="{{ path('chm_document_home') }}">Document Delivery</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
+                        {% if is_granted('ROLE_UPLOADER') %}
                         <li><a href="{{ path('chm_document_list') }}">Gestion des documents</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="#">Gestion des utilisateurs</a></li>
+                        {% endif%}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if is_granted('ROLE_USER') %}
+                        <li><a href="{{ path('fos_user_security_logout') }}">Deconnexion ({{ app.user.username }})</a></li>
+                        {% else %}
+                        <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                        {% endif%}
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -100,6 +117,7 @@
                 '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
                 '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
                 '@MopaBootstrapBundle/Resources/public/js/eyecon-bootstrap-datepicker.js'
+                '@ChmDocumentBundle/Resources/public/js/chm_document.js'
             %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}

@@ -5,7 +5,7 @@ namespace Chm\Bundle\DocumentBundle\Entity;
 /**
  * UserRestriction
  */
-class UserRestriction
+class UserRestriction implements RestrictionInterface
 {
     /**
      * @var integer

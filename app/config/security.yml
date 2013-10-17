@@ -4,8 +4,8 @@ security:
 
 
     role_hierarchy:
-        ROLE_PROVIDER:    ROLE_DOWNLOADER
-        ROLE_ADMIN:       ROLE_PROVIDER
+        ROLE_UPLOADER:    ROLE_DOWNLOADER
+        ROLE_ADMIN:       ROLE_UPLOADER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:
@@ -26,4 +26,4 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/admin/documents/, role: ROLE_UPLOADER }

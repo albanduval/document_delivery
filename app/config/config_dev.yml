@@ -23,9 +23,14 @@ monolog:
         chromephp:
             type:  chromephp
             level: info
+        chm_document:
+            type:  stream
+            path:  %kernel.logs_dir%/chm_document_%kernel.environment%.log
+            level: debug
+            channels: chm_document
 
 assetic:
     use_controller: true
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    delivery_address: alban@chamo.fr

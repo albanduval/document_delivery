@@ -11,7 +11,7 @@ Gestion des documents
 	<thead>
 		<tr>
 			<th>Slug</th>
-			<th>Valid ?</th>
+			<th>Restrictions</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -19,24 +19,79 @@ Gestion des documents
 		{% for document in documents %}
 		<tr class="{% if document.isDownloadable  %}success{% else %}error{% endif %}">
 		    <td>{{ document.slug }}</td>
-		    <td>{{ document.valid }}</td>
 		    <td>
-		        <a class="btn btn-default" href="{{ path('chm_document_download', {'slug': document.slug}) }}">
-		        	<span class="glyphicon glyphicon-download"></span>
-		        	Download
-		        </a>
-		        <a class="btn btn-default" href="{{ path('chm_document_edit', {'id': document.id}) }}">
-		        	<span class="glyphicon glyphicon-edit"></span>
-		        	Edit
-	        	</a>
-		        <a class="btn btn-danger" href="{{ path('chm_document_delete', {'id': document.id}) }}">
-		        	<span class="glyphicon glyphicon-remove"></span>
-		        	Delete
-		        </a>
+		    	<ul class="list-inline">
+		    		{% if document.dateRestrictions is not empty %}
+		    		<li>
+		    			<a href="#" class="chm_popover" title="Date restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:date_restrictions_popover_content.html.twig' with {'restrictions': document.dateRestrictions } %}">
+		    				<i class="icon-calendar"></i>
+						</a>
+	    			</li>
+		    		{% endif %}
+		    		{% if document.ipRestrictions is not empty %}
+		    		<li>
+		    			<a href="#" class="chm_popover" title="IP restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:ip_restrictions_popover_content.html.twig' with {'restrictions': document.ipRestrictions } %}">
+		    				<i class="icon-sitemap"></i>
+						</a>
+	    			</li>
+		    		{% endif %}
+		    		{% if document.downloadCountRestrictions is not empty %}
+		    		<li>
+		    			<a href="#" class="chm_popover" title="Download count restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:download_count_restrictions_popover_content.html.twig' with {'restrictions': document.downloadCountRestrictions } %}">
+		    				<i class="icon-dashboard"></i>
+						</a>
+	    			</li>
+		    		{% endif %}
+		    		{% if document.userRestrictions is not empty %}
+		    		<li>
+		    			<a href="#" class="chm_popover" title="User restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:user_restrictions_popover_content.html.twig' with {'restrictions': document.userRestrictions } %}">
+							<i class="icon-user"></i>
+						</a>
+	    			</li>
+		    		{% endif %}
+		    		{% if document.secretRestrictions is not empty %}
+		    		<li>
+		    			<a href="#" class="chm_popover" title="Secret restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:secret_restrictions_popover_content.html.twig' with {'restrictions': document.secretRestrictions } %}">
+		    				<i class="icon-lock"></i>
+						</a>
+	    			</li>
+		    		{% endif %}
+		    	</ul>
+		    </td>
+		    <td>
+		    	<ul class="list-inline">
+		    		<li>
+				        <a class="btn btn-default" href="{{ path('chm_document_download', {'slug': document.slug}) }}">
+				        	<i class="icon-download"></i>
+				        	Download
+				        </a>
+			        </li>
+			        <li>
+				        <a class="btn btn-default" href="{{ path('chm_document_send', {'id': document.id}) }}">
+				        	<i class="icon-envelope"></i>
+				        	Send by email
+				        </a>
+			        </li>
+			        <li>
+				        <a class="btn btn-default" href="{{ path('chm_document_edit', {'id': document.id}) }}">
+				        	<i class="icon-edit"></i>
+				        	Edit
+			        	</a>
+			        </li>
+			        <li>
+				        <a class="btn btn-danger" href="{{ path('chm_document_delete', {'id': document.id}) }}">
+				        	<i class="icon-remove-sign"></i>
+				        	Delete
+				        </a>
+			        </li>
+			    </ul>
 		    </td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
-<a href="{{ path('chm_document_create') }}">New</a>
+<a class="btn btn-primary" href="{{ path('chm_document_create') }}">
+	<i class="icon-upload"></i>
+	Upload new document
+</a>
 {% endblock %}

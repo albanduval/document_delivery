@@ -91,7 +91,7 @@ class DateRestriction implements RestrictionInterface
     /**
      * Set comment
      *
-     * @param  string        $comment
+     * @param  string          $comment
      * @return DateRestriction
      */
     public function setComment($comment)
@@ -137,7 +137,7 @@ class DateRestriction implements RestrictionInterface
     /**
      * Set id
      *
-     * @param  integer       $id
+     * @param  integer         $id
      * @return DateRestriction
      */
     public function setId($id)

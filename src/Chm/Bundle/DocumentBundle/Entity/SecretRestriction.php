@@ -5,7 +5,7 @@ namespace Chm\Bundle\DocumentBundle\Entity;
 /**
  * SecretRestriction
  */
-class SecretRestriction
+class SecretRestriction implements RestrictionInterface
 {
     /**
      * @var integer

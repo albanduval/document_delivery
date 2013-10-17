@@ -2,7 +2,7 @@ Download allowed if at least one of the following limit is not reached :
 <ul>
 {% for restriction in restrictions %}
 <li>
-	{{ restriction.maxDownloadCount }} downloads, including 
+	{{ restriction.maxDownloadCount }} downloads, including
 	{% if restriction.failureCount and restriction.successCount %}
 	both download successes and failures
 	{% elseif restriction.failureCount %}

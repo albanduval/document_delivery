@@ -1,19 +1,26 @@
+chm_document_home:
+    pattern: /
+    defaults: { _controller: ChmDocumentBundle:DocumentDownload:list }
+
 chm_document_download:
     pattern: /download/{slug}
-    defaults: { _controller: ChmDocumentBundle:DownloadDocument:download }
+    defaults: { _controller: ChmDocumentBundle:DocumentDownload:download }
 
 chm_document_list:
-    pattern: /admin/
+    pattern: /admin/documents/
     defaults: { _controller: ChmDocumentBundle:DocumentUpload:list }
+chm_document_send:
+    pattern: /admin/documents/send/{id}
+    defaults: { _controller: ChmDocumentBundle:DocumentUpload:send }
 chm_document_create:
-    pattern: /admin/create
+    pattern: /admin/documents/create
     defaults: { _controller: ChmDocumentBundle:DocumentUpload:edit, id: 0 }
 chm_document_edit:
-    pattern: /admin/edit/{id}
+    pattern: /admin/documents/edit/{id}
     defaults: { _controller: ChmDocumentBundle:DocumentUpload:edit }
 chm_document_save:
-    pattern: /admin/save
+    pattern: /admin/documents/save/{id}
     defaults: { _controller: ChmDocumentBundle:DocumentUpload:save }
 chm_document_delete:
-    pattern: /admin/delete/{id}
+    pattern: /admin/documents/delete/{id}
     defaults: { _controller: ChmDocumentBundle:DocumentUpload:delete }

@@ -18,11 +18,19 @@ class DocumentType extends AbstractType
             ->add('id', 'hidden')
             ->add('niceName')
             ->add('keepOriginalExtension', 'checkbox', ['required' => false])
-            ->add('file', 'file')
+            ->add('file', 'file', ['required' => false])
             ->add('slug')
-            ->add('validTo')
             ->add('notifySuccess')
             ->add('notifyFailure')
+            ->add('dateRestrictions', 'collection', [
+                'type' => new DateRestrictionType(),
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'widget_add_btn' => [
+                                    'label' => 'Add'
+                                    ],
+                ])
             ->add('ipRestrictions', 'collection', [
                 'type' => new IpRestrictionType(),
                 'allow_add' => true,

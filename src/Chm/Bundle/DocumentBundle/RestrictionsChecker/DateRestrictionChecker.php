@@ -33,22 +33,25 @@ class DateRestrictionChecker extends AbstractRestrictionChecker
         $this->logger->debug('Date restriction check : is current time ' . $currentTime->format($dateFormat) . ' allowed by restriction on date from ' . $formattedFromDate . ' to ' . $formattedToDate . ' ?');
 
         // check "from" date (no "from" date means the beginning of time => always OK !)
-        if($fromDate) {
+        if ($fromDate) {
             if ($currentTime < $fromDate) {
                 $this->logger->debug('  > NO (current date before "from" date)');
+
                 return false;
             }
         }
 
         // check "to" date (no "to" date means the end of time => always OK !)
-        if($toDate) {
+        if ($toDate) {
             if ($currentTime > $toDate) {
                 $this->logger->debug('  > NO (current date after "to" date)');
+
                 return false;
             }
         }
 
         $this->logger->debug('  > YES');
+
         return true;
     }
 }

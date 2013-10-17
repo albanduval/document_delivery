@@ -5,7 +5,7 @@ namespace Chm\Bundle\DocumentBundle\Entity;
 /**
  * DownloadCountRestriction
  */
-class DownloadCountRestriction
+class DownloadCountRestriction implements RestrictionInterface
 {
     /**
      * @var integer
@@ -15,7 +15,7 @@ class DownloadCountRestriction
     /**
      * @var integer
      */
-    private $limit;
+    private $maxDownloadCount;
 
     /**
      * @var boolean
@@ -48,26 +48,26 @@ class DownloadCountRestriction
     }
 
     /**
-     * Set limit
+     * Set maxDownloadCount
      *
-     * @param  integer                  $limit
+     * @param  integer                  $maxDownloadCount
      * @return DownloadCountRestriction
      */
-    public function setLimit($limit)
+    public function setMaxDownloadCount($maxDownloadCount)
     {
-        $this->limit = $limit;
+        $this->maxDownloadCount = $maxDownloadCount;
 
         return $this;
     }
 
     /**
-     * Get limit
+     * Get maxDownloadCount
      *
      * @return integer
      */
-    public function getLimit()
+    public function getMaxDownloadCount()
     {
-        return $this->limit;
+        return $this->maxDownloadCount;
     }
 
     /**

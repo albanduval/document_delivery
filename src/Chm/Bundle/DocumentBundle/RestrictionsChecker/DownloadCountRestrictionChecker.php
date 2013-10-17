@@ -1,11 +1,30 @@
 <?php
 namespace Chm\Bundle\DocumentBundle\RestrictionsChecker;
 
-use Chm\Bundle\DocumentBundle\Entity\DownloadCountRestriction;
+use Psr\Log\LoggerInterface;
+use Chm\Bundle\DocumentBundle\Entity\RestrictionInterface;
 
-class DownloadCountRestrictionChecker
+class DownloadCountRestrictionChecker extends AbstractRestrictionChecker
 {
-    public function check(DownloadCountRestriction $restriction)
+    /**
+     * Logger
+     *
+     * @var
+     */
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
+     * Checks if the given restriction is fulfilled by the current request
+     *
+     * @param UserRestriction The UserRestriction to be checked
+     * @return boolean true on success else false
+     */
+    public function check(RestrictionInterface $restriction)
     {
         throw new \Symfony\Component\Intl\Exception\MethodNotImplementedException(__METHOD__);
     }

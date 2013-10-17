@@ -14,11 +14,12 @@
 {% block title %}ChmDocumentBundle:DocumentUpload:edit{% endblock %}
 
 {% block body %}
-<h1>Welcome to the DocumentUpload:edit page</h1>
-<a class="btn btn-default btn-lg" href="{{ path('chm_document_list') }}">
-	<span class="glyphicon glyphicon-arrow-left"></span>
-	Back to list
-</a>
+
+	<h1>Welcome to the DocumentUpload:edit page</h1>
+	<a class="btn btn-default btn-lg" href="{{ path('chm_document_list') }}">
+		<span class="glyphicon glyphicon-arrow-left"></span>
+		Back to list
+	</a>
 
 	{% form_theme form _self %}
 

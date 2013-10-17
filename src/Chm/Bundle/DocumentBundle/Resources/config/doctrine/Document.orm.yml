@@ -1,6 +1,7 @@
 Chm\Bundle\DocumentBundle\Entity\Document:
     type: entity
     table: document
+    repositoryClass: Chm\Bundle\DocumentBundle\Entity\DocumentRepository
     id:
         id:
             type: integer
@@ -49,10 +50,6 @@ Chm\Bundle\DocumentBundle\Entity\Document:
             length: 100
             fixed: false
             nullable: true
-        validTo:
-            type: datetime
-            nullable: true
-            column: valid_to
         notifySuccess:
             type: boolean
             nullable: true
@@ -101,20 +98,24 @@ Chm\Bundle\DocumentBundle\Entity\Document:
                 blameable:
                     on: update
     oneToMany:
-        ip_restrictions:
+        ipRestrictions:
             targetEntity: IpRestriction
             mappedBy: document
             cascade: [ persist, remove ]
-        secret_restrictions:
+        secretRestrictions:
             targetEntity: SecretRestriction
             mappedBy: document
             cascade: [ persist, remove ]
-        download_count_restrictions:
+        downloadCountRestrictions:
             targetEntity: DownloadCountRestriction
             mappedBy: document
             cascade: [ persist, remove ]
-        user_restrictions:
+        userRestrictions:
             targetEntity: UserRestriction
+            mappedBy: document
+            cascade: [ persist, remove ]
+        dateRestrictions:
+            targetEntity: DateRestriction
             mappedBy: document
             cascade: [ persist, remove ]
         deliveries:

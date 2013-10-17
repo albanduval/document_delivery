@@ -1,15 +1,15 @@
 <?php
 namespace Chm\Bundle\DocumentBundle\RestrictionsChecker;
 
-use Chm\Bundle\DocumentBundle\Entity\IpRestriction;
-use Symfony\Bridge\Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\IpUtils;
+use Chm\Bundle\DocumentBundle\Entity\RestrictionInterface;
 
 /**
  * Check a single IP rule
  */
-class IpRestrictionChecker
+class IpRestrictionChecker extends AbstractRestrictionChecker
 {
     /**
      * @var Logger
@@ -20,7 +20,7 @@ class IpRestrictionChecker
      */
     private $request;
 
-    public function __construct (Logger $logger, Request $request)
+    public function __construct (LoggerInterface $logger, Request $request)
     {
         $this->logger = $logger;
         $this->request = $request;
@@ -30,7 +30,7 @@ class IpRestrictionChecker
      *
      * @return boolean returns true if the restriction has passed
      */
-    public function check(IpRestriction $restriction)
+    public function check(RestrictionInterface $restriction)
     {
         $requestIp = $this->request->getClientIp();
         $allowedIps = $restriction->getIpAddress();

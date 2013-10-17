@@ -15,7 +15,7 @@ class DownloadCountRestrictionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('limit')
+            ->add('maxDownloadCount')
             ->add('failureCount')
             ->add('successCount')
             ->add('comment')

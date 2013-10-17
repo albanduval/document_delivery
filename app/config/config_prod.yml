@@ -20,4 +20,9 @@ monolog:
         nested:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
-            level: debug
+            level: info
+        chm_document:
+            type:  stream
+            path:  %kernel.logs_dir%/chm_document_%kernel.environment%.log
+            level: info
+            channels: chm_document

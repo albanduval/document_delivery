@@ -5,31 +5,54 @@ class RestrictionsChecker
 {
 
     /**
+     * @var SuperUserContextChecker
+     */
+    private $superUserContextChecker;
+
+    /**
+     * @var OnwerChecker
+     */
+    private $ownerDocumentChecker;
+
+    /**
+     * @var DateRestrictionChecker
+     */
+    private $dateRestrictionChecker;
+
+    /**
      * @var IpRestrictionChecker
      */
     private $ipRestrictionChecker;
 
     /**
-     * @var downloadCountRestrictionChecker
+     * @var DownloadCountRestrictionChecker
      */
     private $downloadCountRestrictionChecker;
 
     /**
-     * @var secretRestrictionChecker
+     * @var SecretRestrictionChecker
      */
     private $secretRestrictionChecker;
 
     /**
-     * @var userRestrictionChecker
+     * @var UserRestrictionChecker
      */
     private $userRestrictionChecker;
 
-    public function __construct(IpRestrictionChecker $ipRestrictionChecker, DownloadCountRestrictionChecker $downloadCountRestrictionChecker, SecretRestrictionChecker $secretRestrictionChecker, UserRestrictionChecker $userRestrictionChecker )
+    public function __construct(SuperUserContextChecker $superUserContextChecker, OwnerDocumentChecker $ownerDocumentChecker, DateRestrictionChecker $dateRestrictionChecker, IpRestrictionChecker $ipRestrictionChecker, DownloadCountRestrictionChecker $downloadCountRestrictionChecker, SecretRestrictionChecker $secretRestrictionChecker, UserRestrictionChecker $userRestrictionChecker )
     {
-        $this->ipRestrictionChecker = $ipRestrictionChecker;
+        // context checkers not depending on what is to be downloaded
+        $this->superUserContextChecker = $superUserContextChecker;
+
+        // document checker, depending on main document properties
+        $this->ownerDocumentChecker = $ownerDocumentChecker;
+
+        // restrictions checkers, depending on various restrictions defined by document
+        $this->dateRestrictionChecker          = $dateRestrictionChecker;
+        $this->ipRestrictionChecker            = $ipRestrictionChecker;
         $this->downloadCountRestrictionChecker = $downloadCountRestrictionChecker;
-        $this->secretRestrictionChecker = $secretRestrictionChecker;
-        $this->userRestrictionChecker = $userRestrictionChecker;
+        $this->secretRestrictionChecker        = $secretRestrictionChecker;
+        $this->userRestrictionChecker          = $userRestrictionChecker;
     }
 
     /**
@@ -39,11 +62,35 @@ class RestrictionsChecker
      */
     public function check($document)
     {
-        return
-            $this->checkRestrictionsCollection($this->ipRestrictionChecker, $document->getIpRestrictions())
+        // if super user, it's open bar !
+        if ($this->superUserContextChecker->check($document)) {
+            // no log and return success
+            return true;
+        }
+        // if the current user is the document owner
+        if ($this->ownerDocumentChecker->check($document)) {
+            // no log and return success
+            return true;
+        }
+
+        // if at least one restriction of each existing type is fullfilled
+        if (
+            $this->checkRestrictionsCollection($this->dateRestrictionChecker, $document->getDateRestrictions())
+            && $this->checkRestrictionsCollection($this->ipRestrictionChecker, $document->getIpRestrictions())
             && $this->checkRestrictionsCollection($this->userRestrictionChecker, $document->getUserRestrictions())
             && $this->checkRestrictionsCollection($this->secretRestrictionChecker, $document->getSecretRestrictions())
-            && $this->checkRestrictionsCollection($this->downloadCountRestrictionChecker, $document->getDownloadCountRestrictions());
+            && $this->checkRestrictionsCollection($this->downloadCountRestrictionChecker, $document->getDownloadCountRestrictions())
+            ) {
+            // return true
+            $document->logSuccessDelivery();
+
+            return true;
+        }
+
+        $document->logFailureDelivery();
+
+        // return false
+        return false;
     }
 
     /**

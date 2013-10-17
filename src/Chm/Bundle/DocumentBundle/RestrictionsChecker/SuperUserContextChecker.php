@@ -37,7 +37,7 @@ class SuperUserContextChecker
     {
         $this->logger->debug('Super user restriction check : is current user a super user ?');
 
-        if(!is_object($this->getUser())) {
+        if (!is_object($this->getUser())) {
             $this->logger->debug('  > NO (no authenticated user)');
 
             return false;
