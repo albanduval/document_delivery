@@ -3,3 +3,9 @@ Chm\Bundle\DocumentBundle\Entity\Document:
         file:
             - File:
                 maxSize: 6000000
+Chm\Bundle\DocumentBundle\Entity\DocumentLocatorMessage:
+    properties:
+        message:
+            - Regex:
+                pattern: '/.*##DOCUMENT_LINK##.*/'
+                message: 'The message should contain the document link placeholde : ##DOCUMENT_LINK##.'

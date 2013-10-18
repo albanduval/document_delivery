@@ -1,40 +1,34 @@
 {% extends "ChmDocumentBundle:DocumentUpload:documentUploadLayout.html.twig" %}
 
-{% block title %}ChmDocumentBundle:DocumentUpload:edit{% endblock %}
+{% block title %}{{ parent() }} - Downloadable documents{% endblock %}
 
 {% block h1 %}
-Documents a telecharger
+Downloadable documents
 {% endblock %}
 
 {% block body %}
-<p>
-Les telechargements anonymes ne sont possibles qu'a partir de liens directs.
-</p>
 {% if is_granted('ROLE_USER') %}
-<table class="table table-bordered table-striped">
-	<thead>
-		<tr>
-			<th>Slug</th>
-			<th>Valid ?</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
+
+	{% if documents is not empty %}
+	<ul class="list-inline">
 		{% for document in documents %}
-		<tr class="{% if document.isDownloadable  %}success{% else %}error{% endif %}">
-		    <td>{{ document.slug }}</td>
-		    <td>{{ document.valid }}</td>
-		    <td>
-		        <a class="btn btn-default" href="{{ path('chm_document_download', {'slug': document.slug}) }}">
-		        	<i class="icon-download"></i>
-		        	Download
-		        </a>
-		    </td>
-		</tr>
+		<li>
+	        <a class="btn btn-default" href="{{ path('chm_document_download', {'slug': document.slug}) }}">
+		    	<i class="icon-download"></i>
+		    	{{ document.niceName }}.{{ document.extension }}
+	    	</a>
+		</li>
 		{% endfor %}
-	</tbody>
-</table>
+	</ul>
+	{% else %}
+	<p>
+		There are no downloadable documents for you in your database. Only documents that has been explicitely associated with your user account would appear here, the document you would like to download can be in our database but only reachable using a direct link, sent by email.
+	</p>
+	{% endif %}
 {% else %}
+<p>
+	Les telechargements anonymes ne sont possibles qu'a partir de liens directs.
+</p>
 <p>
 	<a href="{{ path('fos_user_security_login') }}">Connectez-vous</a> pour visualiser la liste des fichiers que vous pouvez telecharger.
 </p>

@@ -1,0 +1,37 @@
+<ul class="list-inline">
+	{% if document.dateRestrictions is not empty %}
+	<li>
+		<a href="#" class="chm_popover" title="Date restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:date_restrictions_popover_content.html.twig' with {'restrictions': document.dateRestrictions } %}">
+			<i class="icon-calendar"></i>
+		</a>
+	</li>
+	{% endif %}
+	{% if document.ipRestrictions is not empty %}
+	<li>
+		<a href="#" class="chm_popover" title="IP restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:ip_restrictions_popover_content.html.twig' with {'restrictions': document.ipRestrictions } %}">
+			<i class="icon-sitemap"></i>
+		</a>
+	</li>
+	{% endif %}
+	{% if document.downloadCountRestrictions is not empty %}
+	<li>
+		<a href="#" class="chm_popover" title="Download count restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:download_count_restrictions_popover_content.html.twig' with {'restrictions': document.downloadCountRestrictions } %}">
+			<i class="icon-dashboard"></i>
+		</a>
+	</li>
+	{% endif %}
+	{% if document.userRestrictions is not empty %}
+	<li>
+		<a href="#" class="chm_popover" title="User restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:user_restrictions_popover_content.html.twig' with {'restrictions': document.userRestrictions } %}">
+			<i class="icon-user"></i>
+		</a>
+	</li>
+	{% endif %}
+	{% if document.secretRestrictions is not empty %}
+	<li>
+		<a href="#" class="chm_popover" title="Secret restrictions" data-content="{% include 'ChmDocumentBundle:DocumentUpload:secret_restrictions_popover_content.html.twig' with {'restrictions': document.secretRestrictions } %}">
+			<i class="icon-lock"></i>
+		</a>
+	</li>
+	{% endif %}
+</ul>

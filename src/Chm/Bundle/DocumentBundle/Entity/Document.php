@@ -693,16 +693,6 @@ class Document
     }
 
     /**
-     * Returns true if there is any possibility to download the document as standard user
-     *
-     * @return boolean Downloadable document
-     */
-    public function isDownloadable()
-    {
-        return true;
-    }
-
-    /**
      * Logs a delivery attempt
      */
     public function logDelivery($success, $sourceIp, $userAgent)
@@ -714,5 +704,39 @@ class Document
         $delivery->setDocument($this);
 
         return $delivery;
+    }
+
+    public function hasRestriction()
+    {
+        return $this->hasDateRestriction()
+            || $this->hasDownloadCountRestriction()
+            || $this->hasIpRestriction()
+            || $this->hasSecretRestriction()
+            || $this->hasUserRestriction();
+    }
+
+    public function hasDateRestriction()
+    {
+        return count($this->dateRestrictions) > 0;
+    }
+
+    public function hasDownloadCountRestriction()
+    {
+        return count($this->downloadCountRestrictions) > 0;
+    }
+
+    public function hasIpRestriction()
+    {
+        return count($this->ipRestrictions) > 0;
+    }
+
+    public function hasSecretRestriction()
+    {
+        return count($this->secretRestrictions) > 0;
+    }
+
+    public function hasUserRestriction()
+    {
+        return count($this->userRestrictions) > 0;
     }
 }

@@ -1,0 +1,59 @@
+Chm\Bundle\DocumentBundle\Entity\DocumentLocatorMessage:
+    type: entity
+    table: document_locator_message
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        email:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+            column: email
+        subject:
+            type: string
+            length: 255
+            fixed: false
+            nullable: false
+            column: subject
+        message:
+            type: text
+            nullable: false
+            column: message
+        success:
+            type: boolean
+            nullable: true
+            column: success
+        createdAt:
+            type: datetime
+            nullable: false
+            column: created_at
+            gedmo:
+                timestampable:
+                    on: create
+    manyToOne:
+        document:
+            targetEntity: Document
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                document_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        createdBy:
+            targetEntity: User
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                created_by:
+                    referencedColumnName: id
+            orphanRemoval: false
+            gedmo:
+                blameable:
+                    on: create
+    lifecycleCallbacks: {  }

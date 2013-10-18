@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Chm\Bundle\DocumentBundle\Entity\Document;
 use Chm\Bundle\DocumentBundle\Entity\Delivery;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Chm\Bundle\DocumentBundle\RestrictionsChecker\SecretRequiredException;
+use Chm\Bundle\DocumentBundle\RestrictionsChecker\SkipRestrictionsCheckException;
 use Chm\Bundle\DocumentBundle\Form\SecretKeyType;
 
 class DocumentDownloadController extends Controller
@@ -34,32 +36,54 @@ class DocumentDownloadController extends Controller
      */
     public function downloadAction($document)
     {
+        $allowedDownload = false;
+        $doLogDownload = true;
 
+        // first check if document can be downloaded
         try {
             $restrictionsChecker = $this->get('chm_document.restrictions_checker');
+            $allowedDownload = $restrictionsChecker->check($document);
+        } catch (SecretRequiredException $e) {
+            // render a secret password form when required
+            $form = $this->createForm(new SecretKeyType(), [], ['action' => $this->generateUrl('chm_document_download', ['slug'=>$document->getSlug()])]);
 
-            if ($restrictionsChecker->check($document)) {
+            return $this->render(
+                                'ChmDocumentBundle:DocumentDownload:secretForm.html.twig',
+                                array('form' => $form->createView())
+                            );
+        } catch (SkipRestrictionsCheckException $e) {
+            // allow download when user is admin or owner of the document + do not create a delivery in this case
+            $allowedDownload = true;
+            $doLogDownload = false;
+        } catch (\Exception $e) {
+            $errorMessage = '' . $e->getMessage();
+        }
+
+        try {
+            if ($allowedDownload) {
 
                 $response = new BinaryFileResponse($document->getAbsoluteFileName());
 
                 //$response->headers->set('Content-Type', $document->getFiletype());
                 //$response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $document->getNiceName());
-                $response->setContentDisposition('attachment', $document->getNiceName() . '.' . $document->getExtension() );
+                $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $document->getNiceName() . '.' . $document->getExtension() );
                 $response->setAutoEtag();
                 $response->setAutoLastModified();
                 $response::trustXSendfileTypeHeader();
 
-                // retrieve data from request
-                $request = $this->get('request');
-                $userAgent = $request->headers->get('User-Agent');
-                $sourceIp = $request->getClientIp();
+                if ($doLogDownload) {
+                    // retrieve data from request
+                    $request = $this->get('request');
+                    $userAgent = $request->headers->get('User-Agent');
+                    $sourceIp = $request->getClientIp();
 
-                // add failed document delivery
-                $delivery = $document->logDelivery(true, $sourceIp, $userAgent, $this->getUser());
+                    // add failed document delivery
+                    $delivery = $document->logDelivery(true, $sourceIp, $userAgent, $this->getUser());
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($delivery);
-                $em->flush();
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($delivery);
+                    $em->flush();
+                }
 
                 return $response;
             } else {
@@ -67,31 +91,26 @@ class DocumentDownloadController extends Controller
                 $errorMessage = 'Request did not pass restrictions, see log files for details.';
             }
 
-        } catch (SecretRequiredException $e) {
-            $form = $this->createForm(new SecretKeyType(), [], ['action' => $this->generateUrl('chm_document_download', ['slug'=>$document->getSlug()])]);
-
-            return $this->render(
-                                'ChmDocumentBundle:DocumentDownload:secretForm.html.twig',
-                                array('form' => $form->createView())
-                            );
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
             throw $e;
         }
 
-        // retrieve data from request
-        $request = $this->get('request');
-        $userAgent = $request->headers->get('User-Agent');
-        $sourceIp = $request->getClientIp();
+        if ($doLogDownload) {
+            // retrieve data from request
+            $request = $this->get('request');
+            $userAgent = $request->headers->get('User-Agent');
+            $sourceIp = $request->getClientIp();
 
-        // add failed document delivery
-        $delivery = $document->logDelivery($success = false, $sourceIp, $userAgent, $this->getUser());
+            // add failed document delivery
+            $delivery = $document->logDelivery($success = false, $sourceIp, $userAgent, $this->getUser());
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($delivery);
-        $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($delivery);
+            $em->flush();
+        }
 
-        throw $this->createNotFoundException( 'No such document : ' . $document->getSlug());
+        throw $this->createNotFoundException( 'No such document : ' . $document->getSlug() . ' (' . $errorMessage . ')');
     }
 
 }

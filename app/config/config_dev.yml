@@ -33,4 +33,5 @@ assetic:
     use_controller: true
 
 swiftmailer:
+    disable_delivery: true
     delivery_address: alban@chamo.fr

@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Chm\Bundle\DocumentBundle\Entity\Document;
+use Chm\Bundle\DocumentBundle\Entity\DocumentLocatorMessage;
 use Chm\Bundle\DocumentBundle\Form\DocumentType;
+use Chm\Bundle\DocumentBundle\Form\DocumentLocatorMessageType;
 
 class DocumentUploadController extends Controller
 {
@@ -19,8 +21,13 @@ class DocumentUploadController extends Controller
                         ->getDoctrine()
                         ->getRepository('ChmDocumentBundle:Document');
 
-        // retrieve documents owned by current user
-        $documents = $repository->findByCreatedBy($this->getUser());
+        if ($this->getUser()->hasRole('ROLE_ADMIN')) {
+            // retrieve documents owned by current user
+            $documents = $repository->findAll();
+        } else {
+            // retrieve documents owned by current user
+            $documents = $repository->findByCreatedBy($this->getUser());
+        }
 
         return array(
             'documents' => $documents
@@ -74,6 +81,7 @@ class DocumentUploadController extends Controller
 
             $em->persist($document);
 
+            // those loops could probably be removed by using livecycle callbacks on the entity postPersist event
             foreach ($document->getDateRestrictions() as $restriction) {
                 $restriction->setDocument($document);
                 $em->persist($restriction);
@@ -114,7 +122,6 @@ class DocumentUploadController extends Controller
     /**
      * Save document action
      *
-     * @Template("ChmDocumentBundle:DocumentUpload:edit.html.twig")
      * @ParamConverter("document", class="ChmDocumentBundle:Document", options={"mapping"={"id"="id"}})
      */
     public function deleteAction($document)
@@ -137,6 +144,50 @@ class DocumentUploadController extends Controller
         );
 
         return $this->redirect($this->generateUrl('chm_document_list'));
+    }
+
+    /**
+     * Save document action
+     *
+     * @Template()
+     * @ParamConverter("document", class="ChmDocumentBundle:Document", options={"mapping"={"id"="id"}})
+     */
+    public function sendAction($document)
+    {
+        $request = $this->getRequest();
+
+        $documentLocatorMessage = new DocumentLocatorMessage();
+        $documentLocatorMessage->setDocument($document);
+
+        $form    = $this->createForm(new DocumentLocatorMessageType(), $documentLocatorMessage);
+
+        if ('POST' === $request->getMethod()) {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                try {
+                    $message = \Swift_Message::newInstance()
+                                ->setTo($documentLocatorMessage->getEmail())
+                                ->setSubject($documentLocatorMessage->getSubject())
+                                ->setBody($documentLocatorMessage->getMessage());
+                    if ($this->get('mailer')->send($message)) {
+                        $documentLocatorMessage->setSuccess(false);
+                    }
+                } catch (\Exception $e) {
+                    throw $e;
+                    $documentLocatorMessage->setSuccess(false);
+                }
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($documentLocatorMessage);
+                $em->flush();
+            }
+        }
+
+        return array(
+            'document' => $document,
+            'form'   => $form->createView()
+        );
     }
 
 }

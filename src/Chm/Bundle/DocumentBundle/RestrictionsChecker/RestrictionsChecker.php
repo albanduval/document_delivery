@@ -58,19 +58,20 @@ class RestrictionsChecker
     /**
      * Check if current request fits the document restrictions
      *
-     * @return boolean wether the document can be downloaded or not
+     * @throws SkipRestrictionsCheckException
+     * @return boolean                        wether the document can be downloaded or not
      */
     public function check($document)
     {
         // if super user, it's open bar !
         if ($this->superUserContextChecker->check($document)) {
             // no log and return success
-            return true;
+            throw new SkipRestrictionsCheckException();
         }
         // if the current user is the document owner
         if ($this->ownerDocumentChecker->check($document)) {
             // no log and return success
-            return true;
+            throw new SkipRestrictionsCheckException();
         }
 
         // if at least one restriction of each existing type is fullfilled
@@ -82,12 +83,8 @@ class RestrictionsChecker
             && $this->checkRestrictionsCollection($this->downloadCountRestrictionChecker, $document->getDownloadCountRestrictions())
             ) {
             // return true
-            $document->logSuccessDelivery();
-
             return true;
         }
-
-        $document->logFailureDelivery();
 
         // return false
         return false;
