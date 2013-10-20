@@ -166,6 +166,10 @@ class DocumentUploadController extends Controller
 
             if ($form->isValid()) {
                 try {
+                    $placeholders = [
+                                    '##DOCUMENT_LINK##' => ''
+                                    ];
+                    $documentLocatorMessage->replacePlaceHolders($placeholders);
                     $message = \Swift_Message::newInstance()
                                 ->setTo($documentLocatorMessage->getEmail())
                                 ->setSubject($documentLocatorMessage->getSubject())

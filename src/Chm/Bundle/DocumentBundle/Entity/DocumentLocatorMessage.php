@@ -218,4 +218,15 @@ class DocumentLocatorMessage
         return $this->createdBy;
     }
 
+    /**
+     * make replacements in message according to given placeholders
+     */
+    public function replacePlaceHolders($placeholders)
+    {
+        // replace placeholders
+        foreach( $placeholders as $search => $replace) {
+            $this->message = str_replace($search, $replace, $this->message);
+        }
+    }
+
 }
