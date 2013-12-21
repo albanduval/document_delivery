@@ -3,18 +3,33 @@
 {% block title %}Send a link to this document by email{% endblock %}
 
 {% block body %}
-	{% if document.hasRestriction %}
-	<p>
-		Be careful, this document is not public, some restriction are defined :
-		{% include 'ChmDocumentBundle:DocumentUpload:document_restrictions_list.html.twig' with {'document': document } %}
-	</p>
-	{% endif%}
+    {% if document.hasRestriction %}
+    <p>
+        Be careful, this document is not public, some restriction are defined :
+        {% include 'ChmDocumentBundle:DocumentUpload:document_restrictions_list.html.twig' with {'document': document } %}
+    </p>
+    {% endif%}
 
-	<p>
-		Do not forget to include the document direct link into the sent email by using the ##DOCUMENT_LINK## placeholder.
-	</p>
+    <p>
+        Do not forget to include the document direct link into the sent email by using the ##DOCUMENT_LINK## placeholder.
+    </p>
 
-	{{ form_errors(form) }}
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.subject) }}
 
-	{{ form(form) }}
+        <div class="row chm_document_send_message_content">
+            <p>
+            Bonjour,
+
+            Voici un document que vous envoie {{ document.createdBy.username }}, vous pourrez le telecharger en suivant le lien suivant : <a href="{{ url('chm_document_download', {slug: document.slug}, false) }}">{{ url('chm_document_download', {slug: document.slug}, false) }}</a>.
+            </p>
+            <p> 
+            {{ form_widget(form.message) }}
+            <p>
+
+            </p>
+        </div>
+    {{ form_end(form) }}
 {% endblock %}

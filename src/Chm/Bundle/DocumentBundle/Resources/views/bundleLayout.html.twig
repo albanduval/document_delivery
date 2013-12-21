@@ -15,7 +15,7 @@
             {% stylesheets
                 '@MopaBootstrapBundle/Resources/public/less/mopabootstrapbundle-fa.less'
                 '@MopaBootstrapBundle/Resources/public/less/eyecon-datepicker.less'
-                '@ChmDocumentBundle/Resources/public/css/document-delivery.css'
+                '@ChmDocumentBundle/Resources/public/css/chm_document.css'
             %}
             <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
             {% endstylesheets %}
@@ -49,17 +49,41 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         {% if is_granted('ROLE_UPLOADER') %}
-                        <li><a href="{{ path('chm_document_list') }}">Gestion des documents</a></li>
+                        <li>
+                            <a href="{{ path('chm_document_list') }}">
+                                <i class="icon-folder-open"></i>
+                                Gestion des documents
+                            </a>
+                        </li>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
-                        <li><a href="#">Gestion des utilisateurs</a></li>
+                        <li>
+                            <a href="#">
+                                <i class="icon-group"></i>
+                                Gestion des utilisateurs
+                            </a>
+                        </li>
                         {% endif%}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if is_granted('ROLE_USER') %}
-                        <li><a href="{{ path('fos_user_security_logout') }}">Deconnexion ({{ app.user.username }})</a></li>
+                        <li>
+                            <a class="chm_tooltip_left" href="{{ path('fos_user_security_logout') }}" title="Logout ({{ app.user.username }})">
+                                <span class="icon-stack">
+                                    <i class="icon-circle icon-stack-base"></i>
+                                    <i class="icon-user icon-dark"></i>
+                                </span>
+                            </a>
+                        </li>
                         {% else %}
-                        <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                        <li>
+                            <a class="chm_tooltip_left" href="{{ path('fos_user_security_login') }}" title="Login">
+                                <span class="icon-stack">
+                                    <i class="icon-circle icon-stack-base"></i>
+                                    <i class="icon-user icon-dark"></i>
+                                </span>
+                            </a>
+                        </li>
                         {% endif%}
                     </ul>
                 </div><!--/.nav-collapse -->

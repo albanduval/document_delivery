@@ -224,7 +224,7 @@ class DocumentLocatorMessage
     public function replacePlaceHolders($placeholders)
     {
         // replace placeholders
-        foreach( $placeholders as $search => $replace) {
+        foreach ($placeholders as $search => $replace) {
             $this->message = str_replace($search, $replace, $this->message);
         }
     }

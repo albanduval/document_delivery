@@ -29,8 +29,20 @@ class DocumentUploadController extends Controller
             $documents = $repository->findByCreatedBy($this->getUser());
         }
 
+        $filterForm = $this->createFormBuilder()
+            ->add('slug', 'text')
+            ->add('owner', 'choice')
+            ->add('date_restriction', 'checkbox')
+            ->add('ip_restriction', 'checkbox')
+            ->add('secret_restriction', 'checkbox')
+            ->add('download_count_restriction', 'checkbox')
+            ->add('user_restriction', 'checkbox')
+            ->add('filter', 'submit')
+            ->getForm();
+
         return array(
-            'documents' => $documents
+            'documents'  => $documents,
+            'filterForm' => $filterForm->createView(),
         );
     }
 
@@ -166,10 +178,11 @@ class DocumentUploadController extends Controller
 
             if ($form->isValid()) {
                 try {
+                    /* abandoned the placeholders behavior, the sent mail is now mainly automatic, just including a custom small message
                     $placeholders = [
-                                    '##DOCUMENT_LINK##' => ''
                                     ];
                     $documentLocatorMessage->replacePlaceHolders($placeholders);
+                    */
                     $message = \Swift_Message::newInstance()
                                 ->setTo($documentLocatorMessage->getEmail())
                                 ->setSubject($documentLocatorMessage->getSubject())
