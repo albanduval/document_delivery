@@ -87,20 +87,22 @@ stof_doctrine_extensions:
             sluggable: true
 
 mopa_bootstrap:
-    version: 3
+    icons:
+        icon_set: fontawesome4
+        shortcut: icon
     form:
         horizontal_label_class: ~
         horizontal_input_wrapper_class: ~
         render_required_asterisk:       true
         collection:
-            widget_remove_btn:
-                attr:
-                    class: btn btn-danger
-                icon: minus-sign
-                icon_color: null
-            widget_add_btn:
-                attr:
-                    class: btn btn-success
-                icon: plus-sign
-                icon_color: null
+            #widget_remove_btn:
+            #    attr:
+            #        class: btn btn-danger
+            #    icon: minus-sign
+            #    icon_color: null
+            #widget_add_btn:
+            #    attr:
+            #        class: btn btn-success
+            #    icon: plus-sign
+            #    icon_color: null
 
